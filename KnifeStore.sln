@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnifeStore", "KnifeStore\KnifeStore.csproj", "{A1236C3E-E56E-431A-960F-C38203F5B955}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1236C3E-E56E-431A-960F-C38203F5B955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1236C3E-E56E-431A-960F-C38203F5B955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1236C3E-E56E-431A-960F-C38203F5B955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1236C3E-E56E-431A-960F-C38203F5B955}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {594525E1-3947-4400-BA09-F17A14D22BB1}
+	EndGlobalSection
+EndGlobal
