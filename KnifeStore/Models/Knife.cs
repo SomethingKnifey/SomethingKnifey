@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +17,7 @@ namespace KnifeStore.Models
         public string Image { get; set; }
         public Style Style { get; set; }
 
+        [Key]
         [ForeignKey("KnifeManufacturer")]
         public int ManufacturerID { get; set; }
         public KnifeManufacturer Manufacturer { get; set; }
@@ -22,9 +25,9 @@ namespace KnifeStore.Models
 
     public enum Style
     {
+        [Display(Name = "Kitchen and Dining")]
+        KitchenAndDining,
         Pocket,
-        Kitchen,
-        Dinnerware,
         Tactical,
         Utility
     }

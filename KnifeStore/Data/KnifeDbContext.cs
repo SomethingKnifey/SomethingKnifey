@@ -13,6 +13,7 @@ namespace KnifeStore.Data
         {
         }
 
+        public DbSet<KnifeManufacturer> Manufacturers { get; set; }
         public DbSet<Knife> Knives { get; set; }
     }
 }

@@ -8,32 +8,34 @@ using System.Threading.Tasks;
 
 namespace KnifeStore.Models
 {
-    public class KnifeDbSeedData
+    public class KnifeManufacturerSeedData
     {
         public static async void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new KnifeDbContext(
                 serviceProvider.GetRequiredService<DbContextOptions<KnifeDbContext>>()))
             {
-                if (context.Knives.Any())
+                if (context.Manufacturers.Any())
                 {
                     return;
                 }
 
-                await context.Knives.AddRangeAsync(
-                    new Knife
+                await context.Manufacturers.AddRangeAsync(
+                    new KnifeManufacturer
                     {
-                        SKU = "Vic-Tin-01",
-                        ManufacturerID = 0,
-                        Manufacturer = "Victorinox",
-                        Model = "Tinker",
-                        Description = "",
-                        Price = 19.99,
-                        
+                        Name = "Victorinox"
+                    },
+
+                    new KnifeManufacturer
+                    {
+                        Name = "Spyderco"
+                    },
+
+                    new KnifeManufacturer
+                    {
+                        Name = "Zwilling J.A. Henckels"
                     }
-
-
-                    );
+                  );
 
                 await context.SaveChangesAsync();
             }
