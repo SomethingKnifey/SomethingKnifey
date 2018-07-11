@@ -21,15 +21,17 @@ namespace KnifeStore.Migrations
 
             modelBuilder.Entity("KnifeStore.Models.Knife", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ManufacturerID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description");
 
+                    b.Property<int>("ID");
+
                     b.Property<string>("Image");
 
-                    b.Property<int?>("ManufacturerID");
+                    b.Property<int?>("ManufacturerID1");
 
                     b.Property<string>("Model");
 
@@ -39,9 +41,9 @@ namespace KnifeStore.Migrations
 
                     b.Property<int>("Style");
 
-                    b.HasKey("ID");
+                    b.HasKey("ManufacturerID");
 
-                    b.HasIndex("ManufacturerID");
+                    b.HasIndex("ManufacturerID1");
 
                     b.ToTable("Knives");
                 });
@@ -56,14 +58,14 @@ namespace KnifeStore.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("KnifeManufacturer");
+                    b.ToTable("Manufacturers");
                 });
 
             modelBuilder.Entity("KnifeStore.Models.Knife", b =>
                 {
                     b.HasOne("KnifeStore.Models.KnifeManufacturer", "Manufacturer")
-                        .WithMany()
-                        .HasForeignKey("ManufacturerID");
+                        .WithMany("Knives")
+                        .HasForeignKey("ManufacturerID1");
                 });
 #pragma warning restore 612, 618
         }
