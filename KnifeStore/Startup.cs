@@ -30,7 +30,7 @@ namespace KnifeStore
             services.AddMvc();
 
 			services.AddDbContext<KnifeDbContext>(options => 
-			options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+			options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
 
 			services.AddScoped<IInventory, InventoryActionModel>();
         }

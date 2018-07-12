@@ -21,17 +21,15 @@ namespace KnifeStore.Migrations
 
             modelBuilder.Entity("KnifeStore.Models.Knife", b =>
                 {
-                    b.Property<int>("ManufacturerID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description");
 
-                    b.Property<int>("ID");
-
                     b.Property<string>("Image");
 
-                    b.Property<int?>("ManufacturerID1");
+                    b.Property<int?>("ManufacturerID");
 
                     b.Property<string>("Model");
 
@@ -41,11 +39,24 @@ namespace KnifeStore.Migrations
 
                     b.Property<int>("Style");
 
-                    b.HasKey("ManufacturerID");
+                    b.HasKey("ID");
 
-                    b.HasIndex("ManufacturerID1");
+                    b.HasIndex("ManufacturerID");
 
                     b.ToTable("Knives");
+
+                    b.HasData(
+                        new { ID = 1, Description = "", Image = "", Model = "Tinker", Price = 19.99m, SKU = "Vic-Tin-01", Style = 1 },
+                        new { ID = 2, Description = "", Image = "", Model = "CyberTool Lite", Price = 109.95m, SKU = "Vic-Cyb-Lit-01", Style = 1 },
+                        new { ID = 3, Description = "", Image = "", Model = "Cadet Alox", Price = 24.95m, SKU = "Vic-Cad-Alo-01", Style = 1 },
+                        new { ID = 4, Description = "", Image = "", Model = "Bradly Bowie", Price = 399.99m, SKU = "Spy-Bra-Bow-01", Style = 2 },
+                        new { ID = 5, Description = "", Image = "", Model = "Sprig", Price = 209.99m, SKU = "Spy-Spr-01", Style = 2 },
+                        new { ID = 6, Description = "", Image = "", Model = "Sustain", Price = 249.99m, SKU = "Spy-Sus-01", Style = 2 },
+                        new { ID = 7, Description = "", Image = "", Model = "Pro 5in. Z15 Serrated", Price = 59.99m, SKU = "Pro-5in-Z15-Ser-01", Style = 0 },
+                        new { ID = 8, Description = "", Image = "", Model = "TWIN Signature 6in.", Price = 19.99m, SKU = "Twi-Sig-6in-01", Style = 0 },
+                        new { ID = 9, Description = "", Image = "", Model = "Four Star 6in.", Price = 59.99m, SKU = "Fou-Sta-6in-01", Style = 0 },
+                        new { ID = 10, Description = "", Image = "", Model = "International Silvercap 6in.", Price = 9.95m, SKU = "Int-Sil-6in-01", Style = 0 }
+                    );
                 });
 
             modelBuilder.Entity("KnifeStore.Models.KnifeManufacturer", b =>
@@ -59,13 +70,19 @@ namespace KnifeStore.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Manufacturers");
+
+                    b.HasData(
+                        new { ID = 1, Name = "Victorinox" },
+                        new { ID = 2, Name = "Spyderco" },
+                        new { ID = 3, Name = "Zwilling J.A. Henckels" }
+                    );
                 });
 
             modelBuilder.Entity("KnifeStore.Models.Knife", b =>
                 {
                     b.HasOne("KnifeStore.Models.KnifeManufacturer", "Manufacturer")
                         .WithMany("Knives")
-                        .HasForeignKey("ManufacturerID1");
+                        .HasForeignKey("ManufacturerID");
                 });
 #pragma warning restore 612, 618
         }

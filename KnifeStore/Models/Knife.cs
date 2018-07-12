@@ -18,9 +18,9 @@ namespace KnifeStore.Models
         public string Image { get; set; }
         public Style Style { get; set; }
 
-        [Key]
-        [ForeignKey("KnifeManufacturer")]
-        public int ManufacturerID { get; set; }
+        //[Key]
+        //[ForeignKey("KnifeManufacturer")]
+        //public int ManufacturerID { get; set; }
         public KnifeManufacturer Manufacturer { get; set; }
     }
 
