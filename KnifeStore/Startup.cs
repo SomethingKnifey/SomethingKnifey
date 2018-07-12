@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using KnifeStore.Data;
+﻿using KnifeStore.Data;
 using KnifeStore.Models;
 using KnifeStore.Models.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -14,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace KnifeStore
 {
-    public class Startup
+	public class Startup
     {
 
 		public IConfiguration Configuration { get; }
@@ -22,6 +18,9 @@ namespace KnifeStore
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
+			var builder = new ConfigurationBuilder().AddEnvironmentVariables();
+			builder.AddUserSecrets<Startup>();
+			Configuration = builder.Build();
 		}
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -31,7 +30,7 @@ namespace KnifeStore
             services.AddMvc();
 
 			services.AddDbContext<KnifeDbContext>(options => 
-			options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+			options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
 
 			services.AddScoped<IInventory, InventoryActionModel>();
         }
