@@ -32,6 +32,10 @@ namespace KnifeStore
 			services.AddDbContext<KnifeDbContext>(options => 
 			options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
 
+			services.AddIdentity<ApplicationUser, IdentityRole>()
+					.AddEntityFrameworkStores<KnifeDbContext>()
+					.AddDefaultTokenProviders();
+
 			services.AddScoped<IInventory, InventoryActionModel>();
         }
 
@@ -54,7 +58,7 @@ namespace KnifeStore
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                await context.Response.WriteAsync("Something went wrong.");
             });
         }
     }
