@@ -2,19 +2,21 @@
 
 <form asp-action="Register" method="post">
     
-    <label for="FirstName">First Name:</label>
-    <input type="text" name="FirstName" placeholder="enter your first name" />
+    <label asp-for="FirstName">First Name:</label>
+    <input asp-for="FirstName" type="text" placeholder="enter your first name" />
 
-    <label for="LastName">Last Name:</label>
-    <input type="text" name="LastName" placeholder="enter your last name" />
+    <label asp-for="LastName">Last Name:</label>
+    <input asp-for="LastName" type="text" placeholder="enter your last name" />
 
-    <label for="Email">Email:</label>
-    <input type="email" name="Email" placeholder="example@somethingknifey.com" />
+    <label asp-for="Email">Email:</label>
+    <input asp-for="Email" type="email" placeholder="example@somethingknifey.com" />
 
-    <label for="Password">Password:</label>
-    <input type="password" name="Password" />
+    <label asp-for="Password">Password:</label>
+    <input asp-for="Password" type="password" />
     
-    <label for="ConfirmPassword">Re-enter your password:</label>
-    <input type="password" name="ConfirmPassword" />
+    <label asp-for="ConfirmPassword">Re-enter your password:</label>
+    <input asp-for="ConfirmPassword" type="password" />
+
+    <button type="submit">Complete Registration</button>
 
 </form>

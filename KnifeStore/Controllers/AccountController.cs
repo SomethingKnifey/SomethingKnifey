@@ -12,13 +12,16 @@ namespace KnifeStore.Controllers
 {
     public class AccountController : Controller
     {
+        private ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AccountController(
+            ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -32,6 +35,11 @@ namespace KnifeStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             ApplicationUser user = new ApplicationUser
             {
                 FirstName = rvm.FirstName,
@@ -40,18 +48,16 @@ namespace KnifeStore.Controllers
                 Email = rvm.Email
             };
 
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user, rvm.Password);
 
             if (result.Succeeded)
             {
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction();
+            return View();
         }
-
-
-
 
 
     }
