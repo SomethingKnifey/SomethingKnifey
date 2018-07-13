@@ -31,13 +31,13 @@ namespace KnifeStore
             services.AddMvc();
 
 			services.AddDbContext<KnifeDbContext>(options => 
-			options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+			options.UseSqlServer(Configuration["ConnectionStrings: ProductionConnection"]));
 
-			services.AddDbContext<ApplicationDbContext>(options =>
-			options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration["ConnectionStrings: DefaultIdentityConnection"]));
 
-			services.AddIdentity<ApplicationUser, IdentityRole>()
-					.AddEntityFrameworkStores<KnifeDbContext>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+					.AddEntityFrameworkStores<ApplicationDbContext>()
 					.AddDefaultTokenProviders();
 
 			services.AddScoped<IInventory, InventoryActionModel>();
@@ -51,17 +51,16 @@ namespace KnifeStore
                 app.UseDeveloperExceptionPage();
             }
 
-			app.UseAuthentication();
-			app.UseStaticFiles();
+            app.UseAuthentication();
 
-			app.UseMvc(routes =>
+            app.UseStaticFiles();
+
+            app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-          
 
             app.Run(async (context) =>
             {
@@ -70,3 +69,4 @@ namespace KnifeStore
         }
     }
 }
+ 
