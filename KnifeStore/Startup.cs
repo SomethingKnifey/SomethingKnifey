@@ -4,6 +4,7 @@ using KnifeStore.Models.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,10 +31,13 @@ namespace KnifeStore
             services.AddMvc();
 
 			services.AddDbContext<KnifeDbContext>(options => 
-			options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
+			options.UseSqlServer(Configuration["ConnectionStrings: ProductionConnection"]));
 
-			services.AddIdentity<ApplicationUser, IdentityRole>()
-					.AddEntityFrameworkStores<KnifeDbContext>()
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration["ConnectionStrings: DefaultIdentityConnection"]));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+					.AddEntityFrameworkStores<ApplicationDbContext>()
 					.AddDefaultTokenProviders();
 
 			services.AddScoped<IInventory, InventoryActionModel>();
@@ -47,14 +51,16 @@ namespace KnifeStore
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
+
+            app.UseStaticFiles();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            app.UseStaticFiles();
 
             app.Run(async (context) =>
             {
@@ -63,3 +69,4 @@ namespace KnifeStore
         }
     }
 }
+ 
