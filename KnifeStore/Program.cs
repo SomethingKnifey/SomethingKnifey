@@ -22,25 +22,6 @@ namespace KnifeStore
 
 			var host = CreateWebHostBuilder(args).Build();
 
-			//using(var scope = host.Services.CreateScope())
-			//{
-			//  var services = scope.ServiceProvider;
-
-			//	try
-			//	{
-			//		var context = services.GetRequiredService<KnifeDbContext>();
-			//		context.Database.Migrate();
-			//	KnifeSeedData.Initialize(services);
-			//		KnifeManufacturerSeedData.Initialize(services);
-
-
-			//	} catch(Exception x)
-			//	{
-			//		var logger = services.GetRequiredService<ILogger<Program>>();
-			//		logger.LogError(x, "An error occurred seeding the Database.");
-			//	}
-			//}
-			//host.Run();
         }
 
 

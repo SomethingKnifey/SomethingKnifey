@@ -4,6 +4,7 @@ using KnifeStore.Models.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,10 @@ namespace KnifeStore
             services.AddMvc();
 
 			services.AddDbContext<KnifeDbContext>(options => 
-			options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
+			options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+			services.AddDbContext<ApplicationDbContext>(options =>
+			options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<KnifeDbContext>()
@@ -47,14 +51,17 @@ namespace KnifeStore
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc(routes =>
+			app.UseAuthentication();
+			app.UseStaticFiles();
+
+			app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseStaticFiles();
+          
 
             app.Run(async (context) =>
             {
