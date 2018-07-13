@@ -59,6 +59,12 @@ namespace KnifeStore.Controllers
             return View();
         }
 
+        [HttpGet("/account/login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
 
     }
 }
