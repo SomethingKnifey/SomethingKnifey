@@ -34,7 +34,7 @@ namespace KnifeStore
 			options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:DefaultIdentityConnection"]));
+            options.UseSqlServer(Configuration["ConnectionStrings:ProductionIdentityConnection"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<ApplicationDbContext>()
