@@ -18,11 +18,28 @@ namespace KnifeStore.Controllers
 			_context = context;
 		}
 
+		public IActionResult Index()
+		{
+			return View();
+		}
+
+		[HttpGet]
         public async Task<IActionResult> ViewAllProducts()
         {
-
 			var AllProducts = await _context.Knives.ToListAsync();
-            return View();
+            return View(AllProducts);
         }
+
+		[HttpGet]
+		public async Task<IActionResult> ViewDetails(int? id)
+		{
+			if (id.HasValue)
+			{
+				return View(await _context.Knives.Where(x => x.ID == id).ToListAsync());
+			}
+			
+
+			return RedirectToAction("Index" , "Home");
+		}
     }
 }
