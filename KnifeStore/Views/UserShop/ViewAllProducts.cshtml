@@ -1,0 +1,14 @@
+﻿@model List<KnifeStore.Models.Knife>
+
+@{
+	Layout = "_Layout";
+}
+
+@foreach (var item in Model)
+{
+	<h2>Model: @item.Model</h2>
+
+	<p>Style: @item.Style</p>
+
+	<p><a asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@item.ID">View Details</a></p>
+}
