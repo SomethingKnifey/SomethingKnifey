@@ -68,19 +68,32 @@ namespace KnifeStore.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
 
                 if (result.Succeeded)
                 {
+                    //var userName = from users in _context.Users
+                    //               where users.Email.Equals(lvm.Email)
+                    //               select users;
 
-                    return RedirectToAction("Index", "Home", true);
+                    return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
                         
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            if (ModelState.IsValid)
+            {
+                await _signInManager.SignOutAsync();
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
     }
