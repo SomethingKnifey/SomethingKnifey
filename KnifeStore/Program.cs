@@ -23,9 +23,7 @@ namespace KnifeStore
 			var host = CreateWebHostBuilder(args).Build();
 
         }
-
-
-
+        
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();

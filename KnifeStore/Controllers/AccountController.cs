@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using KnifeStore.Data;
 using KnifeStore.Models;
 using KnifeStore.Models.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KnifeStore.Controllers
 {
-	
     public class AccountController : Controller
     {
         private ApplicationDbContext _context;
@@ -29,7 +26,6 @@ namespace KnifeStore.Controllers
             _signInManager = signInManager;
         }
 
-		
         [HttpGet("/account/register")]
         public IActionResult Register()
         {
@@ -39,87 +35,53 @@ namespace KnifeStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View();
+                ApplicationUser user = new ApplicationUser
+                {
+                    FirstName = rvm.FirstName,
+                    LastName = rvm.LastName,
+                    UserName = rvm.Email,
+                    Email = rvm.Email
+                };
+
+                var result = await _userManager.CreateAsync(user, rvm.Password);
+
+                if (result.Succeeded)
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
-			List<Claim> claims = new List<Claim>();
-
-            var user = new ApplicationUser
-            {
-                FirstName = rvm.FirstName,
-                LastName = rvm.LastName,
-                UserName = rvm.Email,
-                Email = rvm.Email
-            };
-
-            var result = await _userManager.CreateAsync(user, rvm.Password);
-
-            if (result.Succeeded)
-            {
-				Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
-				claims.Add(emailClaim);
-
-				await _userManager.AddClaimAsync(user, emailClaim);
-
-				if(user.Email == "silentbob@bob.com")
-				{
-					await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
-					await _userManager.AddToRoleAsync(user, ApplicationRoles.Admin);
-				}
-				else
-				{
-					await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
-				}
-
-                await _context.SaveChangesAsync();
-				await _signInManager.SignInAsync(user, false);
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View(rvm);
+            return View();
         }
 
-		
         [HttpGet("/account/login")]
         public IActionResult Login()
         {
             return View();
         }
 
-		
-		[HttpPost]
-		public async Task<IActionResult> Login(LoginViewModel lvm)
-		{
-			if (ModelState.IsValid)
-			{
-				var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel lvm)
+        {
+            if (ModelState.IsValid)
+            {
 
-				if (result.Succeeded)
-				{
-					if (User.IsInRole(ApplicationRoles.Admin))
-					{
-						return RedirectToAction("Index", "Admin");
-					}
+                var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
 
-					return RedirectToAction("Index", "Home");
-				}
-				else
-				{
-					ModelState.AddModelError(string.Empty, "Incorrect name/password combination");
-				}
-			}
+                if (result.Succeeded)
+                {
 
-			return View(lvm);
-		}
+                    return RedirectToAction("Index", "Home", true);
+                }
 
-		public async Task<IActionResult> Logout()
-		{
-			await _signInManager.SignOutAsync();
-			TempData["LoggedOut"] = "User Logged Out";
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
+                        
+            return View();
+        }
 
-			return RedirectToAction("Index", "Home");
-		}
     }
 }
