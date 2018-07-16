@@ -35,25 +35,23 @@ namespace KnifeStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View();
-            }
+                ApplicationUser user = new ApplicationUser
+                {
+                    FirstName = rvm.FirstName,
+                    LastName = rvm.LastName,
+                    UserName = rvm.Email,
+                    Email = rvm.Email
+                };
 
-            ApplicationUser user = new ApplicationUser
-            {
-                FirstName = rvm.FirstName,
-                LastName = rvm.LastName,
-                UserName = rvm.Email,
-                Email = rvm.Email
-            };
+                var result = await _userManager.CreateAsync(user, rvm.Password);
 
-            var result = await _userManager.CreateAsync(user, rvm.Password);
-
-            if (result.Succeeded)
-            {
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                if (result.Succeeded)
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
             return View();
@@ -65,6 +63,25 @@ namespace KnifeStore.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel lvm)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
+
+                if (result.Succeeded)
+                {
+
+                    return RedirectToAction("Index", "Home", true);
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            }
+                        
+            return View();
+        }
 
     }
 }
