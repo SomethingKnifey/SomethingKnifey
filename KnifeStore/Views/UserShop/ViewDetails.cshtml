@@ -1,10 +1,14 @@
 ﻿@model KnifeStore.Models.Knife
 
+@{
+	Layout = "_Layout";
+}
+
 <h2>Model: @Model.Model</h2>
 <p>@Model.Image</p>
 <p>Description: @Model.Description</p>
 <p>Style: @Model.Style</p>
 <p>Price: @Model.Price</p>
 
-<p><a asp-controller="UserShop" asp-action="ViewAllProducts" >Back to List</a></p>
+<p><a asp-controller="UserShop" asp-action="ViewAllProducts">Back to List</a></p>
 <p><a asp-controller="Home" asp-action="Index">Return Home</a></p>
