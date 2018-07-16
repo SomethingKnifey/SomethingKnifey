@@ -86,7 +86,7 @@ namespace KnifeStore.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Logout()
+        public async Task<RedirectToActionResult> Logout()
         {
             if (ModelState.IsValid)
             {
@@ -95,6 +95,8 @@ namespace KnifeStore.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+
 
     }
 }
