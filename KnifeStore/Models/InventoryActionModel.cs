@@ -14,12 +14,12 @@ namespace KnifeStore.Models
 			throw new NotImplementedException();
 		}
 
-		public Task<IActionResult> DeleteKnife(int id)
+		public Task<IActionResult> DeleteKnife(int? id)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task<IActionResult> GetKnife(int id)
+		public Task<IActionResult> GetKnife(int? id)
 		{
 			throw new NotImplementedException();
 		}
@@ -29,7 +29,7 @@ namespace KnifeStore.Models
 			throw new NotImplementedException();
 		}
 
-		public Task<IActionResult> UpdateKnife(int id, Knife knife)
+		public Task<IActionResult> UpdateKnife(int? id)
 		{
 			throw new NotImplementedException();
 		}

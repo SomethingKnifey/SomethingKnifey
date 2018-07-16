@@ -28,14 +28,47 @@ namespace KnifeStore.Controllers
 			_context = context;
 		}
 
-		public Task<IActionResult> CreateKnife(Knife knife)
+		public IActionResult Index()
 		{
-			throw new NotImplementedException();
+			return View();
 		}
 
-		public Task<IActionResult> DeleteKnife(int? id)
+		public IActionResult CreateKnife()
 		{
-			throw new NotImplementedException();
+			
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> CreateKnife(Knife knife)
+		{
+			Knife newKnife = new Knife();
+			newKnife.Model = knife.Model;
+			newKnife.Image = knife.Image;
+			newKnife.Description = knife.Description;
+			newKnife.Style = knife.Style;
+			newKnife.Price = knife.Price;
+
+			_context.Knives.Add(knife);
+			await _context.SaveChangesAsync();
+
+			return RedirectToAction("GetKnives", "Admin");
+		}
+
+
+		public async Task<IActionResult> DeleteKnife(int? id)
+		{
+			var deleteThis = await _context.Knives.FirstOrDefaultAsync(x => x.ID == id);
+
+			if (deleteThis == null)
+			{
+				return NotFound();
+			}
+
+			_context.Knives.Remove(deleteThis);
+			await _context.SaveChangesAsync();
+
+			return RedirectToAction("GetKnives", "Admin");
 		}
 
 		public async Task<IActionResult> GetKnife(int? id)
@@ -49,14 +82,30 @@ namespace KnifeStore.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-		public Task<IActionResult> GetKnives()
+		public async Task<IActionResult> GetKnives()
 		{
-			throw new NotImplementedException();
+			var AllProducts = await _context.Knives.ToListAsync();
+			return View(AllProducts);
 		}
 
-		public Task<IActionResult> UpdateKnife(int? id, Knife knife)
+		public async Task<IActionResult> UpdateKnife(int? id)
 		{
-			throw new NotImplementedException();
+			if (id.HasValue)
+			{
+				var updateThis = await _context.Knives.FirstOrDefaultAsync(a => a.ID == id);
+				return View(updateThis);
+			}
+
+			return RedirectToAction("Index", "Admin");
+
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> UpdateKnife(Knife knife)
+		{
+			_context.Knives.Update(knife);
+			await _context.SaveChangesAsync();
+			return RedirectToAction("GetKnives", "Admin");
 		}
 	}
 }
