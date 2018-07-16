@@ -31,14 +31,19 @@ namespace KnifeStore
             services.AddMvc();
 
 			services.AddDbContext<KnifeDbContext>(options => 
-			options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
+			options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:ProductionIdentityConnection"]));
+            options.UseSqlServer(Configuration["ConnectionStrings:DefaultIdentityConnection"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<ApplicationDbContext>()
 					.AddDefaultTokenProviders();
+
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Admin));
+			});
 
 			services.AddScoped<IInventory, InventoryActionModel>();
         }
