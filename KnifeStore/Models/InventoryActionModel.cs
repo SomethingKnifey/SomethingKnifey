@@ -24,6 +24,11 @@ namespace KnifeStore.Models
 			throw new NotImplementedException();
 		}
 
+		public Task<IActionResult> GetKnives()
+		{
+			throw new NotImplementedException();
+		}
+
 		public Task<IActionResult> UpdateKnife(int id, Knife knife)
 		{
 			throw new NotImplementedException();

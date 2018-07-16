@@ -1,0 +1,14 @@
+﻿@model KnifeStore.Models.Knife
+
+@{
+	Layout = "_Layout";
+}
+
+<h2>Model: @Model.Model</h2>
+<p>@Model.Image</p>
+<p>Description: @Model.Description</p>
+<p>Style: @Model.Style</p>
+<p>Price: @Model.Price</p>
+
+<p><a asp-controller="Admin" asp-action="GetKnives">Back to List</a></p>
+<p><a asp-controller="Admin" asp-action="Index">Return Home</a></p>
