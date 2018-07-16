@@ -73,7 +73,8 @@ namespace KnifeStore.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+
+                    return RedirectToAction("Index", "Home", true);
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
