@@ -1,5 +1,26 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using KnifeStore.Models
+@model KnifeStore.Models.Knife
+
 @{
+	Layout = "_Layout";
 }
+
+<form method="post" asp-action="CreateKnife">
+
+	<label asp-for="Model">Model</label>
+	<input asp-for="Model" />
+
+	<label asp-for="Image">Image URL</label>
+	<input asp-for="Image" />
+
+	<label asp-for="Description">Description</label>
+	<input asp-for="Description" />
+
+	<label asp-for="Price">Price</label>
+	<input asp-for="Price" />
+
+	<input type="submit" value="CreateKnife" />
+</form>
+
+<p><a asp-controller="Admin" asp-action="Index">Return Home</a></p>
+
