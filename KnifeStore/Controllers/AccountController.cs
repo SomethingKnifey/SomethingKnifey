@@ -72,9 +72,9 @@ namespace KnifeStore.Controllers
 
                 if (result.Succeeded)
                 {
-                    //var userName = from users in _context.Users
-                    //               where users.Email.Equals(lvm.Email)
-                    //               select users;
+                    ApplicationUser thisUser = await _userManager.FindByEmailAsync(lvm.Email);
+                    
+                    TempData["thisUserName"] = $"{thisUser.FirstName} {thisUser.LastName}";
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -85,7 +85,7 @@ namespace KnifeStore.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpGet("/account/logout")]
         public async Task<RedirectToActionResult> Logout()
         {
             if (ModelState.IsValid)
