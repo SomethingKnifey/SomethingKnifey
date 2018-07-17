@@ -68,13 +68,15 @@ namespace KnifeStore.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
 
                 if (result.Succeeded)
                 {
+                    ApplicationUser thisUser = await _userManager.FindByEmailAsync(lvm.Email);
+                    
+                    TempData["thisUserName"] = $"{thisUser.FirstName} {thisUser.LastName}";
 
-                    return RedirectToAction("Index", "Home", true);
+                    return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -82,6 +84,19 @@ namespace KnifeStore.Controllers
                         
             return View();
         }
+
+        [HttpGet("/account/logout")]
+        public async Task<RedirectToActionResult> Logout()
+        {
+            if (ModelState.IsValid)
+            {
+                await _signInManager.SignOutAsync();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
 
     }
 }

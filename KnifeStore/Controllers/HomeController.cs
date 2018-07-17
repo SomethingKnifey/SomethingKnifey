@@ -10,6 +10,11 @@ namespace KnifeStore.Controllers
     {
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewData["userName"] = TempData["thisUserName"].ToString();
+            }
+
             return View();
         }
     }
