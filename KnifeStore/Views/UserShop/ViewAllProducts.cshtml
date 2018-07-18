@@ -10,5 +10,10 @@
 
 	<p>Style: @item.Style</p>
 
+    @if (item.Style.ToString() == "Tactical")
+    {
+        <p style="background-color: red; color: white">Only available to Law Enforcement or Military personnel</p>
+    }
+
 	<p><a asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@item.ID">View Details</a></p>
 }

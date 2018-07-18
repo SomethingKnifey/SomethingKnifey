@@ -71,7 +71,8 @@ namespace KnifeStore.Controllers
                     FirstName = rvm.FirstName,
                     LastName = rvm.LastName,
                     UserName = rvm.Email,
-                    Email = rvm.Email
+                    Email = rvm.Email,
+                    IsMilitaryOrLE = rvm.IsMilitaryOrLE
                 };
 
                 //creates new user
@@ -81,32 +82,31 @@ namespace KnifeStore.Controllers
                 if (result.Succeeded)
                 {
                     //add new Claims
-                    string fullName = $"{user.FirstName} {user.LastName}";
+                    string fullName = $"{user.FirstName} {user.LastName}";                    
                     Claim nameClaim = new Claim("FullName", fullName, ClaimValueTypes.String);
                     Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+                    Claim milOrLEClaim = new Claim("MilitaryOrLE", user.IsMilitaryOrLE.ToString(), ClaimValueTypes.Boolean);
 
                     claims.Add(nameClaim);
                     claims.Add(emailClaim);
+                    claims.Add(milOrLEClaim);
 
                     //adds claims to user, adds user to database
                     await _userManager.AddClaimsAsync(user, claims);
 
-                    //await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+                    await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Member);
 
-                    //if (user.Email == "rick@rickandmorty.com")
-                    //{
-                    //    await _userManager.AddToRoleAsync(user, ApplicationRoles.Admin);
-                    //}
+                    if (user.Email == "rick@rickandmorty.com")
+                    {
+                        await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
+                    }
 
                     await _context.SaveChangesAsync();
                     
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-
                     await _signInManager.SignInAsync(user, false);
 
                     if (await _userManager.IsInRoleAsync(user, ApplicationUserRoles.Admin))
                     {
-                        TempData["thisUserName"] = $"{user.FirstName} {user.LastName}";
                         return RedirectToAction("Index", "Admin");
                     }
 
@@ -144,15 +144,13 @@ namespace KnifeStore.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole(ApplicationRoles.Admin))
+                    if (User.IsInRole(ApplicationUserRoles.Admin))
                     {
                         return RedirectToAction("Index", "Admin");
                     }
 
                     ApplicationUser thisUser = await _userManager.FindByEmailAsync(lvm.Email);
                     
-                    TempData["thisUserName"] = $"{thisUser.FirstName} {thisUser.LastName}";
-
                     return RedirectToAction("Index", "Home");
                 }
 
