@@ -25,9 +25,9 @@ namespace KnifeStore.Data
 					SKU = "Vic-Tin-01",
 					//ManufacturerID = 1,
 					Model = "Tinker",
-					Description = "",
+					Description = "One knife to rule them all.",
 					Price = 19.99m,
-					Image = "",
+					Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 					Style = (Style)1
 				},
 
@@ -37,9 +37,9 @@ namespace KnifeStore.Data
 						SKU = "Vic-Cyb-Lit-01",
 						//ManufacturerID = 1,
 						Model = "CyberTool Lite",
-						Description = "",
+						Description = "The best knife you can ever have.",
 						Price = 109.95m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)1
 					},
 
@@ -49,9 +49,9 @@ namespace KnifeStore.Data
 						SKU = "Vic-Cad-Alo-01",
 						//ManufacturerID = 1,
 						Model = "Cadet Alox",
-						Description = "",
+						Description = "The second best knife you can ever have.",
 						Price = 24.95m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)1
 					},
 
@@ -61,9 +61,9 @@ namespace KnifeStore.Data
 						SKU = "Spy-Bra-Bow-01",
 						//ManufacturerID = 1,
 						Model = "Bradly Bowie",
-						Description = "",
+						Description = "Like David Bowie, except pointer.",
 						Price = 399.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)2
 					},
 
@@ -73,9 +73,9 @@ namespace KnifeStore.Data
 						SKU = "Spy-Spr-01",
 						//ManufacturerID = 1,
 						Model = "Sprig",
-						Description = "",
+						Description = "This will butter your bread.",
 						Price = 209.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)2
 					},
 
@@ -85,9 +85,9 @@ namespace KnifeStore.Data
 						SKU = "Spy-Sus-01",
 						//ManufacturerID = 1,
 						Model = "Sustain",
-						Description = "",
+						Description = "You can buy this one if you are a spy.",
 						Price = 249.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)2
 					},
 
@@ -97,9 +97,9 @@ namespace KnifeStore.Data
 						SKU = "Pro-5in-Z15-Ser-01",
 						//ManufacturerID = 2,
 						Model = "Pro 5in. Z15 Serrated",
-						Description = "",
+						Description = "Butter knife with serrated edges.",
 						Price = 59.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)0
 					},
 
@@ -109,9 +109,9 @@ namespace KnifeStore.Data
 						SKU = "Twi-Sig-6in-01",
 						//ManufacturerID = 2,
 						Model = "TWIN Signature 6in.",
-						Description = "",
+						Description = "Another knife.",
 						Price = 19.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)0
 					},
 
@@ -121,9 +121,9 @@ namespace KnifeStore.Data
 						SKU = "Fou-Sta-6in-01",
 						//ManufacturerID = 2,
 						Model = "Four Star 6in.",
-						Description = "",
+						Description = "Four stars.",
 						Price = 59.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)0
 					},
 
@@ -133,9 +133,9 @@ namespace KnifeStore.Data
 						SKU = "Int-Sil-6in-01",
 						//ManufacturerID = 2,
 						Model = "International Silvercap 6in.",
-						Description = "",
+						Description = "International travel knife.",
 						Price = 9.95m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)0
 					}
 				);
