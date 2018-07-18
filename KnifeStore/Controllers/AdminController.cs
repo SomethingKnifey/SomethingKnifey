@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using KnifeStore.Data;
 using KnifeStore.Models;
 using KnifeStore.Models.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace KnifeStore.Controllers
 {
+    [Authorize(Policy = "AdminOnly")]
 	public class AdminController : Controller, IInventory
 	{
 
