@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KnifeStore.Controllers
 {
-    [Authorize(Policy = "AdminOnly")]
+    [Authorize(Policy ="AdminOnly")]
 	public class AdminController : Controller, IInventory
 	{
 
@@ -30,17 +30,29 @@ namespace KnifeStore.Controllers
 			_context = context;
 		}
 
+        /// <summary>
+        /// admin index page action
+        /// </summary>
+        /// <returns>admin index view</returns>
 		public IActionResult Index()
 		{
 			return View();
 		}
 
+        /// <summary>
+        /// method to redirect user to create form
+        /// </summary>
+        /// <returns>form view</returns>
 		public IActionResult CreateKnife()
 		{
-			
 			return View();
 		}
 
+        /// <summary>
+        /// method to create new knife
+        /// </summary>
+        /// <param name="knife">knife object data from form</param>
+        /// <returns>new knife to db, admin to list view</returns>
 		[HttpPost]
 		public async Task<IActionResult> CreateKnife(Knife knife)
 		{
@@ -57,7 +69,11 @@ namespace KnifeStore.Controllers
 			return RedirectToAction("GetKnives", "Admin");
 		}
 
-
+        /// <summary>
+        /// method to delete knife
+        /// </summary>
+        /// <param name="id">nullable int primary key id from database</param>
+        /// <returns>admin to list view</returns>
 		public async Task<IActionResult> DeleteKnife(int? id)
 		{
 			var deleteThis = await _context.Knives.FirstOrDefaultAsync(x => x.ID == id);
@@ -73,6 +89,11 @@ namespace KnifeStore.Controllers
 			return RedirectToAction("GetKnives", "Admin");
 		}
 
+        /// <summary>
+        /// method to view knife details
+        /// </summary>
+        /// <param name="id">nullable integer primary key id from database</param>
+        /// <returns>details view, or admin index if does not exist</returns>
 		public async Task<IActionResult> GetKnife(int? id)
 		{
 			if (id.HasValue)
@@ -81,15 +102,24 @@ namespace KnifeStore.Controllers
 				return View(ChosenBlade);
 			}
 
-			return RedirectToAction("Index", "Home");
+			return RedirectToAction("Index", "Admin");
 		}
 
+        /// <summary>
+        /// method to get list of knives
+        /// </summary>
+        /// <returns>list view</returns>
 		public async Task<IActionResult> GetKnives()
 		{
 			var AllProducts = await _context.Knives.ToListAsync();
 			return View(AllProducts);
 		}
 
+        /// <summary>
+        /// method to update single knife
+        /// </summary>
+        /// <param name="id">nullable integer id primary key from database</param>
+        /// <returns>user to form view with individual knife object to update</returns>
 		public async Task<IActionResult> UpdateKnife(int? id)
 		{
 			if (id.HasValue)
@@ -102,6 +132,11 @@ namespace KnifeStore.Controllers
 
 		}
 
+        /// <summary>
+        /// method to post updates to database
+        /// </summary>
+        /// <param name="knife">knife object from form view</param>
+        /// <returns>admin to list view with knife updated</returns>
 		[HttpPost]
 		public async Task<IActionResult> UpdateKnife(Knife knife)
 		{
