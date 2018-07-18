@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KnifeStore.Controllers
 {
+    // By default, users must be authorized to access url paths
     [Authorize]
     public class AccountController : Controller
     {
@@ -21,7 +22,8 @@ namespace KnifeStore.Controllers
         private SignInManager<ApplicationUser> _signInManager;
 
         /// <summary>
-        /// sets contexts
+        /// Constructor method for AccountController
+        /// Sets database contexts and AspNetCore.Identity properties 
         /// </summary>
         /// <param name="context"></param>
         /// <param name="userManager"></param>
@@ -36,6 +38,10 @@ namespace KnifeStore.Controllers
             _signInManager = signInManager;
         }
 
+        /// <summary>
+        /// Method to accept requests to access the registration page
+        /// </summary>
+        /// <returns>Registration page View</returns>
         [AllowAnonymous]
         [HttpGet("/account/register")]
         public IActionResult Register()
@@ -43,6 +49,13 @@ namespace KnifeStore.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Method which creates a new ApplicationUser based on the values entered into the form
+        /// on the registration page
+        /// Claims for the user are generated based on various values entered into the form as well
+        /// </summary>
+        /// <param name="rvm">RegisterViewModel taken from form</param>
+        /// <returns>Success: Redirect to home page; Failure: registration View</returns>
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
@@ -53,7 +66,7 @@ namespace KnifeStore.Controllers
                 List<Claim> claims = new List<Claim>();
 
                 //instantiate new user with info from form
-                ApplicationUser user = new ApplicationUser()
+                ApplicationUser user = new ApplicationUser
                 {
                     FirstName = rvm.FirstName,
                     LastName = rvm.LastName,
@@ -67,28 +80,29 @@ namespace KnifeStore.Controllers
                 //if creation succeeds
                 if (result.Succeeded)
                 {
-                    //adds new email claim
+                    //add new Claims
+                    string fullName = $"{user.FirstName} {user.LastName}";
+                    Claim nameClaim = new Claim("FullName", fullName, ClaimValueTypes.String);
                     Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
 
+                    claims.Add(nameClaim);
                     claims.Add(emailClaim);
 
                     //adds claims to user, adds user to database
                     await _userManager.AddClaimsAsync(user, claims);
+
+                    //await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+
+                    //if (user.Email == "rick@rickandmorty.com")
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, ApplicationRoles.Admin);
+                    //}
+
                     await _context.SaveChangesAsync();
+                    
+                    await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    //test admin role entry
-                    if(user.Email.ToLower() == "rick@rickandmorty.com")
-                    {
-                        //await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Member);
-                        await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
-                    }
-                    //sets users to members by default
-                    else
-                    {
-                        await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Member);
-                    }
-
-                    await _signInManager.SignInAsync(user, false);
+                    TempData["thisUserName"] = fullName;
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -97,9 +111,9 @@ namespace KnifeStore.Controllers
         }
 
         /// <summary>
-        /// method to direct user to login page
+        /// Method to route users to the login page
         /// </summary>
-        /// <returns>user sent to login view</returns>
+        /// <returns>login View</returns>
         [AllowAnonymous]
         [HttpGet("/account/login")]
         public IActionResult Login()
@@ -108,25 +122,23 @@ namespace KnifeStore.Controllers
         }
 
         /// <summary>
-        /// method to post and validate login form data
+        /// Method to validate users' login credentials based on the values input into the form
+        /// on the login page
         /// </summary>
-        /// <param name="lvm">login view model taken from form</param>
-        /// <returns>user to home page if successful, or message if not</returns>
+        /// <param name="lvm">LoginViewModel taken from form</param>
+        /// <returns>Success: Redirect to home page; Failure: login View</returns>
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel lvm)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, isPersistent: false, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByEmailAsync(lvm.Email);
-
-                    if (await _userManager.IsInRoleAsync(user, ApplicationUserRoles.Admin))
+                    if (User.IsInRole(ApplicationRoles.Admin))
                     {
-                        TempData["thisUserName"] = $"{user.FirstName} {user.LastName}";
                         return RedirectToAction("Index", "Admin");
                     }
 
@@ -144,9 +156,9 @@ namespace KnifeStore.Controllers
         }
 
         /// <summary>
-        /// method to log out
+        /// Method to log out the signed in user
         /// </summary>
-        /// <returns>when user logged out, returns home index view</returns>
+        /// <returns>Redirect to home page</returns>
         [AllowAnonymous]
         [HttpGet("/account/logout")]
         public async Task<RedirectToActionResult> Logout()
