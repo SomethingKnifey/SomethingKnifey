@@ -56,14 +56,16 @@ namespace KnifeStore.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CreateKnife(Knife knife)
 		{
-			Knife newKnife = new Knife();
-			newKnife.Model = knife.Model;
-			newKnife.Image = knife.Image;
-			newKnife.Description = knife.Description;
-			newKnife.Style = knife.Style;
-			newKnife.Price = knife.Price;
+            Knife newKnife = new Knife
+            {
+                Model = knife.Model,
+                Image = knife.Image,
+                Description = knife.Description,
+                Style = knife.Style,
+                Price = knife.Price
+            };
 
-			_context.Knives.Add(knife);
+            _context.Knives.Add(knife);
 			await _context.SaveChangesAsync();
 
 			return RedirectToAction("GetKnives", "Admin");
