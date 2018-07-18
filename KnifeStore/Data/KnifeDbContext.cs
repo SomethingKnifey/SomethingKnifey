@@ -25,9 +25,9 @@ namespace KnifeStore.Data
 					SKU = "Vic-Tin-01",
 					//ManufacturerID = 1,
 					Model = "Tinker",
-					Description = "",
+					Description = "One knife to rule them all.",
 					Price = 19.99m,
-					Image = "",
+					Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 					Style = (Style)1
 				},
 
@@ -39,7 +39,7 @@ namespace KnifeStore.Data
 						Model = "CyberTool Lite",
 						Description = "",
 						Price = 109.95m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)1
 					},
 
@@ -51,7 +51,7 @@ namespace KnifeStore.Data
 						Model = "Cadet Alox",
 						Description = "",
 						Price = 24.95m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)1
 					},
 
@@ -63,7 +63,7 @@ namespace KnifeStore.Data
 						Model = "Bradly Bowie",
 						Description = "",
 						Price = 399.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)2
 					},
 
@@ -75,7 +75,7 @@ namespace KnifeStore.Data
 						Model = "Sprig",
 						Description = "",
 						Price = 209.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)2
 					},
 
@@ -87,7 +87,7 @@ namespace KnifeStore.Data
 						Model = "Sustain",
 						Description = "",
 						Price = 249.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)2
 					},
 
@@ -111,7 +111,7 @@ namespace KnifeStore.Data
 						Model = "TWIN Signature 6in.",
 						Description = "",
 						Price = 19.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)0
 					},
 
@@ -123,7 +123,7 @@ namespace KnifeStore.Data
 						Model = "Four Star 6in.",
 						Description = "",
 						Price = 59.99m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)0
 					},
 
@@ -135,7 +135,7 @@ namespace KnifeStore.Data
 						Model = "International Silvercap 6in.",
 						Description = "",
 						Price = 9.95m,
-						Image = "",
+						Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg",
 						Style = (Style)0
 					}
 				);

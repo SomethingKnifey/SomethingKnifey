@@ -17,16 +17,19 @@
 
 <form method="post" asp-action="UpdateKnife">
 
-	<label asp-for="Model">Model</label>
-	<input asp-for="Model" />
+    <label asp-for="Model">Model</label>
+    <input asp-for="Model" />
 
-	<label asp-for="Description">Description</label>
-	<input asp-for="Description" />
+    <label asp-for="Image">Image URL</label>
+    <input asp-for="Image" />
 
-	<label asp-for="Price">Price</label>
-	<input asp-for="Price" />
+    <label asp-for="Description">Description</label>
+    <input asp-for="Description" />
 
-	<input type="submit" value="UpdateKnife" />
+    <label asp-for="Price">Price</label>
+    <input asp-for="Price" />
+
+    <input type="submit" value="UpdateKnife" />
 </form>
 
 <p><a asp-controller="Admin" asp-action="GetKnives">Back to List</a></p>

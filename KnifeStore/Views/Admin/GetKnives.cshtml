@@ -10,6 +10,8 @@
 
 	<p>Style: @item.Style</p>
 
+    <img src="@item.Image"/>
+
 	<p><a asp-controller="Admin" asp-action="GetKnife" asp-route-id="@item.ID">View Details</a></p>
 	<p><a asp-controller="Admin" asp-action="UpdateKnife" asp-route-id="@item.ID">Update Product</a></p>
 	<p><a asp-controller="Admin" asp-action="DeleteKnife" asp-route-id="@item.ID">Delete Product</a></p>

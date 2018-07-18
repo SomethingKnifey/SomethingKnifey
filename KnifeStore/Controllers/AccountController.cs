@@ -91,16 +91,14 @@ namespace KnifeStore.Controllers
                     //adds claims to user, adds user to database
                     await _userManager.AddClaimsAsync(user, claims);
 
-                    //await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+                    await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Member);
 
-                    //if (user.Email == "rick@rickandmorty.com")
-                    //{
-                    //    await _userManager.AddToRoleAsync(user, ApplicationRoles.Admin);
-                    //}
+                    if (user.Email == "rick@rickandmorty.com")
+                    {
+                        await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
+                    }
 
                     await _context.SaveChangesAsync();
-                    
-                    await _signInManager.SignInAsync(user, isPersistent: false);
 
                     await _signInManager.SignInAsync(user, false);
 
@@ -144,7 +142,7 @@ namespace KnifeStore.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole(ApplicationRoles.Admin))
+                    if (User.IsInRole(ApplicationUserRoles.Admin))
                     {
                         return RedirectToAction("Index", "Admin");
                     }

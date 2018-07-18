@@ -27,7 +27,14 @@
             <h1 style="font-family: 'Pacifico', cursive"><strong><a href="~/" style="color: black; text-decoration: none">Something Knifey</a></strong></h1>
             @if (SignInManager.IsSignedIn(User))
             {
-                <p>Welcome @User.Claims.First(n => n.Type == "FullName").Value!</p>
+                try
+                {
+                <p>Welcome! @User.Claims.First(n => n.Type == "FullName").Value!</p>
+                } catch(Exception)
+                {
+                    <p></p>
+
+                }
             }
             <ul>
                 @if (SignInManager.IsSignedIn(User))
