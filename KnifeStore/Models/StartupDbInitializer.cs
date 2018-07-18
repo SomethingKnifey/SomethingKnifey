@@ -13,11 +13,11 @@ namespace KnifeStore.Models
     {
 		private static readonly List<IdentityRole> Roles = new List<IdentityRole>()
 		{
-			new IdentityRole {Name = ApplicationRoles.Admin,
-								NormalizedName = ApplicationRoles.Admin.ToUpper(),
+			new IdentityRole {Name = ApplicationUserRoles.Admin,
+								NormalizedName = ApplicationUserRoles.Admin.ToUpper(),
 								ConcurrencyStamp = Guid.NewGuid().ToString() },
-			new IdentityRole {Name = ApplicationRoles.Member,
-								NormalizedName = ApplicationRoles.Member.ToUpper(),
+			new IdentityRole {Name = ApplicationUserRoles.Member,
+								NormalizedName = ApplicationUserRoles.Member.ToUpper(),
 								ConcurrencyStamp = Guid.NewGuid().ToString()}
 		};
 

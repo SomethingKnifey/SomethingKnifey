@@ -42,10 +42,11 @@ namespace KnifeStore
 
 			services.AddAuthorization(options =>
 			{
-				options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Admin));
+				options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationUserRoles.Admin));
 			});
 
 			services.AddScoped<IInventory, InventoryActionModel>();
+            //services.AddSingleton<IAuthorizationHandler, AdminHandler>;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

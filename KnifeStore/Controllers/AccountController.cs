@@ -53,7 +53,7 @@ namespace KnifeStore.Controllers
                 List<Claim> claims = new List<Claim>();
 
                 //instantiate new user with info from form
-                ApplicationUser user = new ApplicationUser
+                ApplicationUser user = new ApplicationUser()
                 {
                     FirstName = rvm.FirstName,
                     LastName = rvm.LastName,
@@ -77,15 +77,15 @@ namespace KnifeStore.Controllers
                     await _context.SaveChangesAsync();
 
                     //test admin role entry
-                    if(user.Email == "rick@rickandmorty.com")
+                    if(user.Email.ToLower() == "rick@rickandmorty.com")
                     {
-                        await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
-                        await _userManager.AddToRoleAsync(user, ApplicationRoles.Admin);
+                        //await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Member);
+                        await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
                     }
                     //sets users to members by default
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+                        await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Member);
                     }
 
                     await _signInManager.SignInAsync(user, false);
@@ -122,8 +122,11 @@ namespace KnifeStore.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole(ApplicationRoles.Admin))
+                    var user = await _userManager.FindByEmailAsync(lvm.Email);
+
+                    if (await _userManager.IsInRoleAsync(user, ApplicationUserRoles.Admin))
                     {
+                        TempData["thisUserName"] = $"{user.FirstName} {user.LastName}";
                         return RedirectToAction("Index", "Admin");
                     }
 
