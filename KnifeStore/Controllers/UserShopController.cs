@@ -5,15 +5,20 @@ using System.Threading.Tasks;
 using KnifeStore.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using KnifeStore.Models;
 
 namespace KnifeStore.Controllers
 {
     public class UserShopController : Controller
     {
-		/// <summary>
-		/// sets internal DbContext variable
-		/// </summary>
-		private KnifeDbContext _context;
+        private UserManager<ApplicationUser> _userManager;
+        private SignInManager<ApplicationUser> _signInManager;
+
+        /// <summary>
+        /// sets internal DbContext variable
+        /// </summary>
+        private KnifeDbContext _context;
 
 		/// <summary>
 		/// sets internal variable to DbContext of Knife Model
@@ -55,10 +60,17 @@ namespace KnifeStore.Controllers
 			if (id.HasValue)
 			{
 				var ChosenBlade = await _context.Knives.FirstOrDefaultAsync(x => x.ID == id);
-				return View(ChosenBlade);
-			}
-			
-			return RedirectToAction("Index" , "Home");
+
+                if (ChosenBlade.Style.ToString() != "Tactical" ||
+                   (User.Identity.Name != null && User.Claims.First(c => c.Type == "MilitaryOrLE").Value == "True"))
+                {
+                    return View(ChosenBlade);
+                }
+
+                return RedirectToAction("ViewAllProducts", "UserShop");                
+            }
+
+            return RedirectToAction("Index" , "Home");
 		}
     }
 }

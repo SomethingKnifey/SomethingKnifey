@@ -10,6 +10,7 @@ namespace KnifeStore.Models
     {
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
+        public bool IsMilitaryOrLE { get; set; }
     }
 
 	public static class ApplicationUserRoles

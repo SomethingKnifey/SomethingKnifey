@@ -71,7 +71,8 @@ namespace KnifeStore.Controllers
                     FirstName = rvm.FirstName,
                     LastName = rvm.LastName,
                     UserName = rvm.Email,
-                    Email = rvm.Email
+                    Email = rvm.Email,
+                    IsMilitaryOrLE = rvm.IsMilitaryOrLE
                 };
 
                 //creates new user
@@ -81,12 +82,14 @@ namespace KnifeStore.Controllers
                 if (result.Succeeded)
                 {
                     //add new Claims
-                    string fullName = $"{user.FirstName} {user.LastName}";
+                    string fullName = $"{user.FirstName} {user.LastName}";                    
                     Claim nameClaim = new Claim("FullName", fullName, ClaimValueTypes.String);
                     Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+                    Claim milOrLEClaim = new Claim("MilitaryOrLE", user.IsMilitaryOrLE.ToString(), ClaimValueTypes.Boolean);
 
                     claims.Add(nameClaim);
                     claims.Add(emailClaim);
+                    claims.Add(milOrLEClaim);
 
                     //adds claims to user, adds user to database
                     await _userManager.AddClaimsAsync(user, claims);
@@ -99,12 +102,11 @@ namespace KnifeStore.Controllers
                     }
 
                     await _context.SaveChangesAsync();
-
+                    
                     await _signInManager.SignInAsync(user, false);
 
                     if (await _userManager.IsInRoleAsync(user, ApplicationUserRoles.Admin))
                     {
-                        TempData["thisUserName"] = $"{user.FirstName} {user.LastName}";
                         return RedirectToAction("Index", "Admin");
                     }
 
@@ -149,8 +151,6 @@ namespace KnifeStore.Controllers
 
                     ApplicationUser thisUser = await _userManager.FindByEmailAsync(lvm.Email);
                     
-                    TempData["thisUserName"] = $"{thisUser.FirstName} {thisUser.LastName}";
-
                     return RedirectToAction("Index", "Home");
                 }
 

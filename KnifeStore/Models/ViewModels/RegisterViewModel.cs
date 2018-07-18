@@ -23,5 +23,7 @@ namespace KnifeStore.Models.ViewModels
         [Required]
         [Compare("Password", ErrorMessage = "Passwords do not match.")]
         public string ConfirmPassword { get; set; }
+        
+        public bool IsMilitaryOrLE { get; set; }
     }
 }
