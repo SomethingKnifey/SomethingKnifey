@@ -89,6 +89,13 @@ namespace KnifeStore.Controllers
                     }
 
                     await _signInManager.SignInAsync(user, false);
+
+                    if (await _userManager.IsInRoleAsync(user, ApplicationUserRoles.Admin))
+                    {
+                        TempData["thisUserName"] = $"{user.FirstName} {user.LastName}";
+                        return RedirectToAction("Index", "Admin");
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
             }
