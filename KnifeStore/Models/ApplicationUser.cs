@@ -12,7 +12,7 @@ namespace KnifeStore.Models
 		public string LastName { get; set; }
     }
 
-	public static class ApplicationRoles
+	public static class ApplicationUserRoles
 	{
 		public const string Member = "Member";
 		public const string Admin = "Admin";
