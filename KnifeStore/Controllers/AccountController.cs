@@ -82,7 +82,7 @@ namespace KnifeStore.Controllers
                 {
                     //add new Claims
                     string fullName = $"{user.FirstName} {user.LastName}";
-                    Claim nameClaim = new Claim(ClaimTypes.Name, fullName, ClaimValueTypes.String);
+                    Claim nameClaim = new Claim("FullName", fullName, ClaimValueTypes.String);
                     Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
 
                     claims.Add(nameClaim);
@@ -90,21 +90,17 @@ namespace KnifeStore.Controllers
 
                     //adds claims to user, adds user to database
                     await _userManager.AddClaimsAsync(user, claims);
-                    await _context.SaveChangesAsync();
-                    
-                    ////test admin role entry
+
+                    //await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
+
                     //if (user.Email == "rick@rickandmorty.com")
                     //{
-                    //    await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
                     //    await _userManager.AddToRoleAsync(user, ApplicationRoles.Admin);
                     //}
-                    ////sets users to members by default
-                    //else
-                    //{
-                    //    await _userManager.AddToRoleAsync(user, ApplicationRoles.Member);
-                    //}
 
-                    await _signInManager.SignInAsync(user, false);
+                    await _context.SaveChangesAsync();
+                    
+                    await _signInManager.SignInAsync(user, isPersistent: false);
 
                     TempData["thisUserName"] = fullName;
                     return RedirectToAction("Index", "Home");
@@ -137,7 +133,7 @@ namespace KnifeStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(lvm.Email, lvm.Password, isPersistent: false, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
