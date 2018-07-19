@@ -144,13 +144,14 @@ namespace KnifeStore.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole(ApplicationUserRoles.Admin))
+
+                    ApplicationUser thisUser = await _userManager.FindByEmailAsync(lvm.Email);
+
+                    if (await _userManager.IsInRoleAsync(thisUser, ApplicationUserRoles.Admin))
                     {
                         return RedirectToAction("Index", "Admin");
                     }
 
-                    ApplicationUser thisUser = await _userManager.FindByEmailAsync(lvm.Email);
-                    
                     return RedirectToAction("Index", "Home");
                 }
 
