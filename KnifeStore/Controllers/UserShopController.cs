@@ -74,7 +74,7 @@ namespace KnifeStore.Controllers
 		}
 
         [HttpPost]
-        public async Task<IActionResult> AddItemToCart(int? id)
+        public async Task<IActionResult> AddToCart(int? id)
         {
             if (id.HasValue && _signInManager.IsSignedIn(User))
             {
@@ -82,8 +82,29 @@ namespace KnifeStore.Controllers
                 var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
                 user.Basket.Items.Add(chosenBlade);
+
+                await _context.SaveChangesAsync();
             }
             
+            return RedirectToAction("ViewAllProducts", "UserShop");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> RemoveFromCart(int? id)
+        {
+            if (id.HasValue && _signInManager.IsSignedIn(User))
+            {
+                var chosenBlade = await _context.Knives.FirstOrDefaultAsync(k => k.ID == id);
+                var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+                if (user.Basket.Items.Contains(chosenBlade))
+                {
+                    user.Basket.Items.Remove(chosenBlade);
+
+                    await _context.SaveChangesAsync();
+                }                
+            }
+
             return RedirectToAction("ViewAllProducts", "UserShop");
         }
     }
