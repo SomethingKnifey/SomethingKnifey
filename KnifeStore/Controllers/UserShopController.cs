@@ -59,12 +59,12 @@ namespace KnifeStore.Controllers
 		{
 			if (id.HasValue)
 			{
-				var ChosenBlade = await _context.Knives.FirstOrDefaultAsync(x => x.ID == id);
+				var chosenBlade = await _context.Knives.FirstOrDefaultAsync(k => k.ID == id);
 
-                if (ChosenBlade.Style.ToString() != "Tactical" ||
+                if (chosenBlade.Style.ToString() != "Tactical" ||
                    (User.Identity.Name != null && User.Claims.First(c => c.Type == "MilitaryOrLE").Value == "True"))
                 {
-                    return View(ChosenBlade);
+                    return View(chosenBlade);
                 }
 
                 return RedirectToAction("ViewAllProducts", "UserShop");                
@@ -72,5 +72,19 @@ namespace KnifeStore.Controllers
 
             return RedirectToAction("Index" , "Home");
 		}
+
+        [HttpPost]
+        public async Task<IActionResult> AddItemToCart(int? id)
+        {
+            if (id.HasValue && _signInManager.IsSignedIn(User))
+            {
+                var chosenBlade = await _context.Knives.FirstOrDefaultAsync(k => k.ID == id);
+                var user = await _userManager.FindByEmailAsync(User.Identity.Name);
+
+                user.Basket.Items.Add(chosenBlade);
+            }
+            
+            return RedirectToAction("ViewAllProducts", "UserShop");
+        }
     }
 }

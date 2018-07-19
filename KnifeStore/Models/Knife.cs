@@ -16,11 +16,7 @@ namespace KnifeStore.Models
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        public Style Style { get; set; }
-
-        //[Key]
-        //[ForeignKey("KnifeManufacturer")]
-        //public int ManufacturerID { get; set; }
+        public Style Style { get; set; }        
         public KnifeManufacturer Manufacturer { get; set; }
     }
 
