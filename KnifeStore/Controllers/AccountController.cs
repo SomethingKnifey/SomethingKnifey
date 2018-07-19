@@ -72,7 +72,8 @@ namespace KnifeStore.Controllers
                     LastName = rvm.LastName,
                     UserName = rvm.Email,
                     Email = rvm.Email,
-                    IsMilitaryOrLE = rvm.IsMilitaryOrLE
+                    IsMilitaryOrLE = rvm.IsMilitaryOrLE,
+                    Basket = new Basket()
                 };
 
                 //creates new user
