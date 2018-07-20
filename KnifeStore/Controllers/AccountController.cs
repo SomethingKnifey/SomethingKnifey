@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using KnifeStore.Data;
@@ -17,6 +15,7 @@ namespace KnifeStore.Controllers
     public class AccountController : Controller
     {
         //gets contexts
+        private BasketDbContext _basketContext;
         private ApplicationDbContext _context;
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signInManager;
@@ -29,10 +28,12 @@ namespace KnifeStore.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         public AccountController(
+            BasketDbContext basketContext,
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
+            _basketContext = basketContext;
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -65,6 +66,9 @@ namespace KnifeStore.Controllers
                 //if model is valid, instantiate new claim list
                 List<Claim> claims = new List<Claim>();
 
+                Basket basket = new Basket();
+                _basketContext.Add(basket);
+
                 //instantiate new user with info from form
                 ApplicationUser user = new ApplicationUser
                 {
@@ -73,7 +77,7 @@ namespace KnifeStore.Controllers
                     UserName = rvm.Email,
                     Email = rvm.Email,
                     IsMilitaryOrLE = rvm.IsMilitaryOrLE,
-                    Basket = new Basket()
+                    BasketID = basket.ID
                 };
 
                 //creates new user
@@ -102,6 +106,7 @@ namespace KnifeStore.Controllers
                         await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
                     }
 
+                    await _basketContext.SaveChangesAsync();
                     await _context.SaveChangesAsync();
                     
                     await _signInManager.SignInAsync(user, false);

@@ -1,10 +1,6 @@
 ﻿using KnifeStore.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KnifeStore.Data
 {
@@ -18,7 +14,6 @@ namespace KnifeStore.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
         }
     }
 

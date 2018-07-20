@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace KnifeStore.Models
 {
@@ -11,7 +7,7 @@ namespace KnifeStore.Models
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
         public bool IsMilitaryOrLE { get; set; }
-        public Basket Basket { get; set; }
+        public int BasketID { get; set; }
     }
 
 	public static class ApplicationUserRoles
