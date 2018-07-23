@@ -4,18 +4,24 @@
 	Layout = "_Layout";
 }
 
-@foreach (var item in Model)
-{
-	<h2>Model: @item.Model</h2>
+<div class="container bg-info">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+        <div class="col-md-6 border border-dark">
+            <h2>Model: @item.Model</h2>
 
-    <img src="@item.Image"/>
+            <img src="@item.Image" class="img-thumbnail" />
 
-	<p>Style: @item.Style</p>
+            <p>Style: @item.Style</p>
 
-    @if (item.Style.ToString() == "Tactical")
-    {
-        <p style="background-color: red; color: white">Only available to Law Enforcement or Military personnel</p>
-    }
+            @if (item.Style.ToString() == "Tactical")
+            {
+                <p style="background-color: red; color: white">Only available to Law Enforcement or Military personnel</p>
+            }
 
-	<p><a asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@item.ID">View Details</a></p>
-}
+            <p><a style="color: black;" asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@item.ID">View Details</a></p>
+        </div>
+        }
+    </div>
+</div>
