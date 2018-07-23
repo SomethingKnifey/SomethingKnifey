@@ -27,16 +27,15 @@ namespace KnifeStore.Controllers
             {
                 var chosenBlade = await _knifeContext.Knives.FirstOrDefaultAsync(k => k.ID == id);
                 var user = await _appContext.Users.FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
+
+                Basket basket = new Basket
+                {
+                    Username = user.UserName,
+                    KnifeModel = chosenBlade.Model
+                };
                 
-                try
-                {
-
-                    await _appContext.SaveChangesAsync();
-                }
-                catch
-                {
-
-                }                
+                await _appContext.Baskets.AddAsync(basket);
+                await _appContext.SaveChangesAsync();
             }
 
             return RedirectToAction("ViewAllProducts", "UserShop");
