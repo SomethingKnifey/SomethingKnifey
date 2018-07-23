@@ -31,7 +31,7 @@ namespace KnifeStore
             services.AddMvc();
 
 			services.AddDbContext<KnifeDbContext>(options => 
-			options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+			options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration["ConnectionStrings:DefaultIdentityConnection"]));
@@ -48,11 +48,11 @@ namespace KnifeStore
 				options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationUserRoles.Admin));
 			});
 
-            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
-            {
-                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
-                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
-            });
+            //services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            //{
+            //    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
+            //    microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
+            //});
 
 			services.AddScoped<IInventory, InventoryActionModel>();
             //services.AddSingleton<IAuthorizationHandler, AdminHandler>;
