@@ -6,6 +6,7 @@ namespace KnifeStore.Models
     public class Basket
     {
         public int ID { get; set; }
-        public List<Knife> Items { get; set; }
+        public string Username { get; set; }
+        public string KnifeModel { get; set; }
     }
 }

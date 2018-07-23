@@ -27,10 +27,9 @@ namespace KnifeStore.Controllers
             {
                 var chosenBlade = await _knifeContext.Knives.FirstOrDefaultAsync(k => k.ID == id);
                 var user = await _appContext.Users.FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
-
+                
                 try
                 {
-                    user.Basket.Items.Add(chosenBlade);
 
                     await _appContext.SaveChangesAsync();
                 }
@@ -51,19 +50,19 @@ namespace KnifeStore.Controllers
                 var chosenBlade = await _knifeContext.Knives.FirstOrDefaultAsync(k => k.ID == id);
                 var user = await _appContext.Users.FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
 
-                if (user.Basket.Items.Contains(chosenBlade))
-                {
-                    try
-                    {
-                        user.Basket.Items.Remove(chosenBlade);
+                //if (user.Basket.Items.Contains(chosenBlade))
+                //{
+                //    try
+                //    {
+                //        user.Basket.Items.Remove(chosenBlade);
 
-                        await _appContext.SaveChangesAsync();
-                    }
-                    catch
-                    {
+                //        await _appContext.SaveChangesAsync();
+                //    }
+                //    catch
+                //    {
 
-                    }                    
-                }
+                //    }                    
+                //}
             }
 
             return RedirectToAction("ViewAllProducts", "UserShop");

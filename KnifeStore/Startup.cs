@@ -35,10 +35,7 @@ namespace KnifeStore
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration["ConnectionStrings:DefaultIdentityConnection"]));
-
-            services.AddDbContext<BasketDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:DefaultBasketConnection"]));
-
+            
             services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<ApplicationDbContext>()
 					.AddDefaultTokenProviders();

@@ -4,16 +4,14 @@ using KnifeStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace KnifeStore.Migrations.ApplicationDb
+namespace KnifeStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180719051746_added-basket")]
-    partial class addedbasket
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,8 +25,6 @@ namespace KnifeStore.Migrations.ApplicationDb
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
-
-                    b.Property<int?>("BasketID");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -69,8 +65,6 @@ namespace KnifeStore.Migrations.ApplicationDb
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BasketID");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -88,53 +82,13 @@ namespace KnifeStore.Migrations.ApplicationDb
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.HasKey("ID");
+                    b.Property<string>("KnifeModel");
 
-                    b.ToTable("Basket");
-                });
-
-            modelBuilder.Entity("KnifeStore.Models.Knife", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BasketID");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Image");
-
-                    b.Property<int?>("ManufacturerID");
-
-                    b.Property<string>("Model");
-
-                    b.Property<decimal>("Price");
-
-                    b.Property<string>("SKU");
-
-                    b.Property<int>("Style");
+                    b.Property<string>("Username");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("BasketID");
-
-                    b.HasIndex("ManufacturerID");
-
-                    b.ToTable("Knife");
-                });
-
-            modelBuilder.Entity("KnifeStore.Models.KnifeManufacturer", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("KnifeManufacturer");
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -245,24 +199,6 @@ namespace KnifeStore.Migrations.ApplicationDb
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("KnifeStore.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("KnifeStore.Models.Basket", "Basket")
-                        .WithMany()
-                        .HasForeignKey("BasketID");
-                });
-
-            modelBuilder.Entity("KnifeStore.Models.Knife", b =>
-                {
-                    b.HasOne("KnifeStore.Models.Basket")
-                        .WithMany("Items")
-                        .HasForeignKey("BasketID");
-
-                    b.HasOne("KnifeStore.Models.KnifeManufacturer", "Manufacturer")
-                        .WithMany("Knives")
-                        .HasForeignKey("ManufacturerID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
