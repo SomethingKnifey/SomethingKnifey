@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using KnifeStore.Data;
@@ -29,6 +27,7 @@ namespace KnifeStore.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         public AccountController(
+            BasketDbContext basketContext,
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
@@ -64,6 +63,7 @@ namespace KnifeStore.Controllers
             {
                 //if model is valid, instantiate new claim list
                 List<Claim> claims = new List<Claim>();
+                
 
                 //instantiate new user with info from form
                 ApplicationUser user = new ApplicationUser
