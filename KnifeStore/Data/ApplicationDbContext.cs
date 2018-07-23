@@ -11,7 +11,7 @@ namespace KnifeStore.Data
 
 		}
 
-        DbSet<Basket> Baskets { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
