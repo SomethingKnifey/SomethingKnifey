@@ -1,4 +1,9 @@
+# Please regrade the following:
+	-Added a readme
+	-Added more CSS. Also note with the CSS, we have been using bootstrap, so there are inline styles and bootstrap classes used throughout the document rather than in the base css style file.
+
 # SomethingKnifey
+
 
 ## About this project
 
