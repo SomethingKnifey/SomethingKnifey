@@ -27,7 +27,6 @@ namespace KnifeStore.Controllers
         /// <param name="userManager"></param>
         /// <param name="signInManager"></param>
         public AccountController(
-            BasketDbContext basketContext,
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
@@ -64,7 +63,6 @@ namespace KnifeStore.Controllers
                 //if model is valid, instantiate new claim list
                 List<Claim> claims = new List<Claim>();
                 
-
                 //instantiate new user with info from form
                 ApplicationUser user = new ApplicationUser
                 {
@@ -73,7 +71,6 @@ namespace KnifeStore.Controllers
                     UserName = rvm.Email,
                     Email = rvm.Email,
                     IsMilitaryOrLE = rvm.IsMilitaryOrLE,
-                    Basket = new Basket()
                 };
 
                 //creates new user
@@ -101,7 +98,7 @@ namespace KnifeStore.Controllers
                     {
                         await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
                     }
-
+                    
                     await _context.SaveChangesAsync();
                     
                     await _signInManager.SignInAsync(user, false);
