@@ -50,16 +50,16 @@ namespace KnifeStore.Migrations
                 columns: new[] { "ID", "Description", "Image", "ManufacturerID", "Model", "Price", "SKU", "Style" },
                 values: new object[,]
                 {
-                    { 1, "", "", null, "Tinker", 19.99m, "Vic-Tin-01", 1 },
-                    { 2, "", "", null, "CyberTool Lite", 109.95m, "Vic-Cyb-Lit-01", 1 },
-                    { 3, "", "", null, "Cadet Alox", 24.95m, "Vic-Cad-Alo-01", 1 },
-                    { 4, "", "", null, "Bradly Bowie", 399.99m, "Spy-Bra-Bow-01", 2 },
-                    { 5, "", "", null, "Sprig", 209.99m, "Spy-Spr-01", 2 },
-                    { 6, "", "", null, "Sustain", 249.99m, "Spy-Sus-01", 2 },
-                    { 7, "", "", null, "Pro 5in. Z15 Serrated", 59.99m, "Pro-5in-Z15-Ser-01", 0 },
-                    { 8, "", "", null, "TWIN Signature 6in.", 19.99m, "Twi-Sig-6in-01", 0 },
-                    { 9, "", "", null, "Four Star 6in.", 59.99m, "Fou-Sta-6in-01", 0 },
-                    { 10, "", "", null, "International Silvercap 6in.", 9.95m, "Int-Sil-6in-01", 0 }
+                    { 1, "One knife to rule them all.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "Tinker", 19.99m, "Vic-Tin-01", 1 },
+                    { 2, "The best knife you can ever have.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "CyberTool Lite", 109.95m, "Vic-Cyb-Lit-01", 1 },
+                    { 3, "The second best knife you can ever have.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "Cadet Alox", 24.95m, "Vic-Cad-Alo-01", 1 },
+                    { 4, "Like David Bowie, except pointer.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "Bradly Bowie", 399.99m, "Spy-Bra-Bow-01", 2 },
+                    { 5, "This will butter your bread.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "Sprig", 209.99m, "Spy-Spr-01", 2 },
+                    { 6, "You can buy this one if you are a spy.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "Sustain", 249.99m, "Spy-Sus-01", 2 },
+                    { 7, "Butter knife with serrated edges.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "Pro 5in. Z15 Serrated", 59.99m, "Pro-5in-Z15-Ser-01", 0 },
+                    { 8, "Another knife.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "TWIN Signature 6in.", 19.99m, "Twi-Sig-6in-01", 0 },
+                    { 9, "Four stars.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "Four Star 6in.", 59.99m, "Fou-Sta-6in-01", 0 },
+                    { 10, "International travel knife.", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Messerbank_2_fcm.jpg/1200px-Messerbank_2_fcm.jpg", null, "International Silvercap 6in.", 9.95m, "Int-Sil-6in-01", 0 }
                 });
 
             migrationBuilder.InsertData(

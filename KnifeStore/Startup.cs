@@ -48,11 +48,11 @@ namespace KnifeStore
 				options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationUserRoles.Admin));
 			});
 
-            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
-            {
-                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
-                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
-            });
+            //services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            //{
+            //    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
+            //    microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
+            //});
 
 			services.AddScoped<IInventory, InventoryActionModel>();
             //services.AddSingleton<IAuthorizationHandler, AdminHandler>;
