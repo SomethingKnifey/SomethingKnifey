@@ -1,8 +1,13 @@
 ﻿@model KnifeStore.Models.ViewModels.LoginViewModel
 
+@using Microsoft.AspNetCore.Identity;
+@using KnifeStore.Models
+
 @{
     Layout = "_Layout";
 }
+
+@inject SignInManager<ApplicationUser> SignInManager
 
 <h2>Login to Your Account</h2>
 
@@ -22,4 +27,14 @@
         <button type="submit">Login</button>
     </div>
 
+    @{
+        var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        @foreach (var provider in loginProviders)
+        {
+           <a asp-action="ExternalLogin" asp-controller="Account">@provider.Name</a>
+
+        }
+    }
 </form>
+
+
