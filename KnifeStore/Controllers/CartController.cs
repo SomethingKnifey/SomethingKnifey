@@ -11,13 +11,11 @@ namespace KnifeStore.Controllers
 {
     public class CartController : Controller
     {
-        private BasketDbContext _basketContext;
         private KnifeDbContext _knifeContext;
         private ApplicationDbContext _appContext;
 
-        public CartController(BasketDbContext basketContext, KnifeDbContext knifeContext, ApplicationDbContext appContext)
+        public CartController(KnifeDbContext knifeContext, ApplicationDbContext appContext)
         {
-            _basketContext = basketContext;
             _knifeContext = knifeContext;
             _appContext = appContext;
         }
@@ -29,11 +27,17 @@ namespace KnifeStore.Controllers
             {
                 var chosenBlade = await _knifeContext.Knives.FirstOrDefaultAsync(k => k.ID == id);
                 var user = await _appContext.Users.FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
-                var basket = await _basketContext.Baskets.FirstOrDefaultAsync(b => b.ID == user.BasketID);
 
-                basket.Items.Add(chosenBlade);
+                try
+                {
+                    user.Basket.Items.Add(chosenBlade);
 
-                await _basketContext.SaveChangesAsync();
+                    await _appContext.SaveChangesAsync();
+                }
+                catch
+                {
+
+                }                
             }
 
             return RedirectToAction("ViewAllProducts", "UserShop");
@@ -46,13 +50,19 @@ namespace KnifeStore.Controllers
             {
                 var chosenBlade = await _knifeContext.Knives.FirstOrDefaultAsync(k => k.ID == id);
                 var user = await _appContext.Users.FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
-                var basket = await _basketContext.Baskets.FirstOrDefaultAsync(b => b.ID == user.BasketID);
 
-                if (basket.Items.Contains(chosenBlade))
+                if (user.Basket.Items.Contains(chosenBlade))
                 {
-                    basket.Items.Remove(chosenBlade);
+                    try
+                    {
+                        user.Basket.Items.Remove(chosenBlade);
 
-                    await _basketContext.SaveChangesAsync();
+                        await _appContext.SaveChangesAsync();
+                    }
+                    catch
+                    {
+
+                    }                    
                 }
             }
 
