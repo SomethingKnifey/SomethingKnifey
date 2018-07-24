@@ -1,0 +1,27 @@
+﻿@model List<KnifeStore.Models.Knife>
+
+@{
+    Layout = "_Layout";
+}
+
+<h2>Items in Basket: @Model.Count</h2>
+
+@foreach (var item in Model)
+{
+    var knifeToDelete = new Dictionary<string, string>
+    {
+        { "knifeModel", item.Model }
+    };
+
+    <div class="col" style="position: relative; text-align: center">
+        <h2>@item.Model</h2>
+
+        <img src="@item.Image" />
+
+        <p>Style: @item.Style</p>
+
+        <p><a asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@item.ID">View Details</a></p>
+        <p><a asp-controller="Cart" asp-action="RemoveFromCart" asp-all-route-data="knifeToDelete">Remove From Cart</a></p>
+    </div>
+
+}
