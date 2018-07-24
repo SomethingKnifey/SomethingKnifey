@@ -159,7 +159,8 @@ namespace KnifeStore.Controllers
             return View();
         }
 
-        //external login
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult ExternalLogin(string provider)
         {
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account");
