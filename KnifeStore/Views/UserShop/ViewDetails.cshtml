@@ -1,8 +1,10 @@
 ﻿@model KnifeStore.Models.Knife
 
 @{
-	Layout = "_Layout";
+    Layout = "_Layout";
 }
+
+<p><a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model.ID">Add To Cart</a></p>
 
 <h2>Model: @Model.Model</h2>
 <img src="@Model.Image" />
