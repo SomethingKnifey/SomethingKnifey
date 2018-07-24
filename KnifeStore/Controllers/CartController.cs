@@ -41,27 +41,37 @@ namespace KnifeStore.Controllers
             return RedirectToAction("ViewAllProducts", "UserShop");
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> RemoveFromCart(int? id)
+        [HttpGet]
+        public async Task<IActionResult> MyCart()
         {
-            if (id.HasValue && User.Identity.Name != null)
+            if (User.Identity.Name != null)
             {
-                var chosenBlade = await _knifeContext.Knives.FirstOrDefaultAsync(k => k.ID == id);
-                var user = await _appContext.Users.FirstOrDefaultAsync(u => u.Email == User.Identity.Name);
+                List<Knife> knivesInBasket = new List<Knife>();
 
-                //if (user.Basket.Items.Contains(chosenBlade))
-                //{
-                //    try
-                //    {
-                //        user.Basket.Items.Remove(chosenBlade);
+                foreach (var basket in _appContext.Baskets)
+                {
+                    if (basket.Username == User.Identity.Name)
+                    {
+                        var knife = await _knifeContext.Knives.FirstOrDefaultAsync(k => basket.KnifeModel == k.Model);
+                        knivesInBasket.Add(knife);
+                    }
+                }
 
-                //        await _appContext.SaveChangesAsync();
-                //    }
-                //    catch
-                //    {
+                return View(knivesInBasket);
+            }
 
-                //    }                    
-                //}
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveFromCart(string knifeModel)
+        {
+            if (User.Identity.Name != null && !String.IsNullOrEmpty(knifeModel))
+            {
+                var basket = await _appContext.Baskets.FirstOrDefaultAsync(b => b.Username == User.Identity.Name && b.KnifeModel == knifeModel);
+                _appContext.Baskets.Remove(basket);
+
+                await _appContext.SaveChangesAsync();
             }
 
             return RedirectToAction("ViewAllProducts", "UserShop");
