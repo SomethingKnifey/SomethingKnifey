@@ -47,8 +47,8 @@ namespace KnifeStore
 
             services.AddAuthentication()
                 .AddMicrosoftAccount(microsoftOptions =>{
-                microsoftOptions.ClientId = Configuration["OAUTH:Authentication:Microsoft:ApplicationId"];
-                microsoftOptions.ClientSecret = Configuration["OAUTH:Authentication:Microsoft:Password"];
+                microsoftOptions.ClientId = Configuration["OAUTH:Authentication:Microsoft:ClientId"];
+                microsoftOptions.ClientSecret = Configuration["OAUTH:Authentication:Microsoft:ClientSecret"];
                  })
                 .AddGoogle(googleOptions =>{
                 googleOptions.ClientId = Configuration["OAUTH:Authentication:Google:ClientId"];
