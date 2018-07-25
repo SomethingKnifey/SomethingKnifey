@@ -45,13 +45,17 @@ namespace KnifeStore
 				options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationUserRoles.Admin));
 			});
 
-            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
-            {
+            services.AddAuthentication()
+                .AddMicrosoftAccount(microsoftOptions =>{
                 microsoftOptions.ClientId = Configuration["OAUTH:Authentication:Microsoft:ApplicationId"];
                 microsoftOptions.ClientSecret = Configuration["OAUTH:Authentication:Microsoft:Password"];
-            });
+                 })
+                .AddGoogle(googleOptions =>{
+                googleOptions.ClientId = Configuration["OAUTH:Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["OAUTH:Authentication:Google:ClientSecret"];
+                 });
 
-			services.AddScoped<IInventory, InventoryActionModel>();
+            services.AddScoped<IInventory, InventoryActionModel>();
            
         }
 

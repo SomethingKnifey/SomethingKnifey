@@ -159,7 +159,8 @@ namespace KnifeStore.Controllers
             return View();
         }
 
-        [HttpGet]
+
+        
         [AllowAnonymous]
         public IActionResult ExternalLogin(string provider)
         {
