@@ -18,13 +18,7 @@ namespace KnifeStore.Models.ViewModels
         [Required]
         public string LastName { get; set; }
 
-        [Required]
-        public string Password { get; set; }
-
-        [Required]
-        [Compare("Password", ErrorMessage = "Passwords do not match.")]
-        public string ConfirmPassword { get; set; }
-
         public bool IsMilitaryOrLE { get; set; }
+
     }
 }
