@@ -159,8 +159,11 @@ namespace KnifeStore.Controllers
             return View();
         }
 
-
-        
+        /// <summary>
+        /// Method to begin external login. Takes the provider info from the login page and executes the callback.
+        /// </summary>
+        /// <param name="provider">string input of provider taken from login.cshtml page button</param>
+        /// <returns>external login page from microsoft or google.</returns>
         [AllowAnonymous]
         public IActionResult ExternalLogin(string provider)
         {
@@ -169,6 +172,11 @@ namespace KnifeStore.Controllers
             return Challenge(properties, provider);
         }
 
+        /// <summary>
+        /// callback method after challenge from third party API is executed.
+        /// </summary>
+        /// <param name="remoteError">if the challenge from the external login completes, this inputs a null value for a remote error, allowing the callback to continue</param>
+        /// <returns>returns user to external login view to confirm email and password</returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string remoteError = null)
@@ -198,30 +206,74 @@ namespace KnifeStore.Controllers
             return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
         }
 
+        
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel elvm)
         {
             if (ModelState.IsValid)
             {
+
                 var info = await _signInManager.GetExternalLoginInfoAsync();
-                if(info == null)
+                if (info == null)
                 {
                     TempData["Error"] = "Error loading information.";
                 }
 
-                var user = new ApplicationUser { UserName = elvm.Email, Email = elvm.Email };
-                var result = await _userManager.CreateAsync(user);
+                //if model is valid, instantiate new claim list
+                List<Claim> claims = new List<Claim>();
 
+                //instantiate new user with info from form
+                ApplicationUser user = new ApplicationUser
+                {
+                    FirstName = elvm.FirstName,
+                    LastName = elvm.LastName,
+                    UserName = elvm.Email,
+                    Email = elvm.Email,
+                    IsMilitaryOrLE = elvm.IsMilitaryOrLE,
+                };
+
+                //creates new user
+                var result = await _userManager.CreateAsync(user, elvm.Password);
+
+                //if creation succeeds
                 if (result.Succeeded)
                 {
-                    result = await _userManager.AddLoginAsync(user, info);
+                    //add new Claims
+                    string fullName = $"{user.FirstName} {user.LastName}";
+                    Claim nameClaim = new Claim("FullName", fullName, ClaimValueTypes.String);
+                    Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+                    Claim milOrLEClaim = new Claim("MilitaryOrLE", user.IsMilitaryOrLE.ToString(), ClaimValueTypes.Boolean);
 
-                    if (result.Succeeded)
+                    claims.Add(nameClaim);
+                    claims.Add(emailClaim);
+                    claims.Add(milOrLEClaim);
+
+                    //adds claims to user, adds user to database
+                    await _userManager.AddClaimsAsync(user, claims);
+
+                    await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Member);
+
+                    if (user.Email == "rick@rickandmorty.com")
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-
-                        return RedirectToAction("Index", "Home");
+                        await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
                     }
+
+                    await _context.SaveChangesAsync();
+
+                    
+
+                    await _signInManager.SignInAsync(user, false);
+
+                    if (await _userManager.IsInRoleAsync(user, ApplicationUserRoles.Admin))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+
+                    return RedirectToAction("Index", "Home");
                 }
+
+               
+              
+
             }
 
             return View(elvm);

@@ -7,9 +7,40 @@
 
 <h2>ExternalLogin</h2>
 
-<form asp-action="ExternalLoginConfirmation" method="post">
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
-    <button type="submit">Register</button>
+<form asp-action="ExternalLoginConfirmation" asp-controller="Account">
+
+    <div>
+        <label asp-for="FirstName">First Name:</label>
+        <input asp-for="FirstName" type="text" placeholder="enter your first name" />
+    </div>
+
+    <div>
+        <label asp-for="LastName">Last Name:</label>
+        <input asp-for="LastName" type="text" placeholder="enter your last name" />
+    </div>
+
+    <div>
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" type="email" placeholder="example@somethingknifey.com" />
+    </div>
+
+    <div>
+        <label asp-for="Password">Password:</label>
+        <input asp-for="Password" type="password" />
+    </div>
+
+    <div>
+        <label asp-for="ConfirmPassword">Re-enter your password:</label>
+        <input asp-for="ConfirmPassword" type="password" />
+    </div>
+
+    <div>
+        <label asp-for="IsMilitaryOrLE">Are you currently in law enforcement or the military?</label>
+        <input asp-for="IsMilitaryOrLE" type="checkbox" />
+    </div>
+
+    <div>
+        <button type="submit">Complete Registration</button>
+    </div>
 
 </form>

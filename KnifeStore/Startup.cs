@@ -47,12 +47,12 @@ namespace KnifeStore
 
             services.AddAuthentication()
                 .AddMicrosoftAccount(microsoftOptions =>{
-                microsoftOptions.ClientId = Configuration["OAUTH:Authentication:Microsoft:ClientId"];
-                microsoftOptions.ClientSecret = Configuration["OAUTH:Authentication:Microsoft:ClientSecret"];
+                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
+                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
                  })
                 .AddGoogle(googleOptions =>{
-                googleOptions.ClientId = Configuration["OAUTH:Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = Configuration["OAUTH:Authentication:Google:ClientSecret"];
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
                  });
 
             services.AddScoped<IInventory, InventoryActionModel>();
