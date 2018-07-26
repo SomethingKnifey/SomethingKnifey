@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using KnifeStore.Data;
@@ -176,11 +177,12 @@ namespace KnifeStore.Controllers
         /// callback method after challenge from third party API is executed.
         /// </summary>
         /// <param name="remoteError">if the challenge from the external login completes, this inputs a null value for a remote error, allowing the callback to continue</param>
-        /// <returns>returns user to external login view to confirm email and password</returns>
+        /// <returns>returns user to external login view to confirm email and password. If user is already registered they are redirected to the login page</returns>
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string remoteError = null)
         {
+            //this immediately catches an error from the returned challenge and redirects back to login page.
             if(remoteError != null)
             {
                 TempData["ErrorMessage"] = "Something went wrong";
@@ -194,6 +196,7 @@ namespace KnifeStore.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
+            //returned result from third party
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
 
             if (result.Succeeded)
@@ -201,12 +204,51 @@ namespace KnifeStore.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            //gets the name and email returned from Google or Microsoft
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var name = info.Principal.FindFirstValue(ClaimTypes.Name);
+            string[] fullname = name.Split(" ");
 
-            return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+            //this takes the provided information and checks to see if the user exists. If the user exists, they are logged in and returned to home index. If the user does not exist they are taken to the registration confirmation page to answer the claim question about military or law enforcement.
+            try
+            {
+
+                ApplicationUser thisUser = await _userManager.FindByEmailAsync(email);
+
+                await _signInManager.SignInAsync(thisUser, false);
+
+                if (await _userManager.IsInRoleAsync(thisUser, ApplicationUserRoles.Admin))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+
+                if(await _userManager.IsInRoleAsync(thisUser, ApplicationUserRoles.Member))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+            }
+            catch(Exception)
+            {
+                TempData["ErrorMessage"] = "Something went wrong";
+                return RedirectToAction(nameof(Login));
+            }
+
+            //returns user to registration view if they do not currently exist
+            return View("ExternalLogin", new ExternalLoginViewModel {
+                Email = email,
+                FirstName = fullname[0],
+                LastName = fullname[1]
+            });
         }
 
-        
+        /// <summary>
+        /// post method for external login. The user is sent here to answer the claims question and finish registration.
+        /// </summary>
+        /// <param name="elvm">View model taken from the ExternalLogin form</param>
+        /// <returns>Creates user in database and returns them to appropriate home index based on role of Member or Admin</returns>
+        [AllowAnonymous]
+        [HttpPost]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel elvm)
         {
             if (ModelState.IsValid)
@@ -228,11 +270,11 @@ namespace KnifeStore.Controllers
                     LastName = elvm.LastName,
                     UserName = elvm.Email,
                     Email = elvm.Email,
-                    IsMilitaryOrLE = elvm.IsMilitaryOrLE,
+                    
                 };
 
                 //creates new user
-                var result = await _userManager.CreateAsync(user, elvm.Password);
+                var result = await _userManager.CreateAsync(user);
 
                 //if creation succeeds
                 if (result.Succeeded)
@@ -259,8 +301,6 @@ namespace KnifeStore.Controllers
 
                     await _context.SaveChangesAsync();
 
-                    
-
                     await _signInManager.SignInAsync(user, false);
 
                     if (await _userManager.IsInRoleAsync(user, ApplicationUserRoles.Admin))
@@ -271,13 +311,9 @@ namespace KnifeStore.Controllers
                     return RedirectToAction("Index", "Home");
                 }
 
-               
-              
-
             }
 
             return View(elvm);
-
         }
 
         /// <summary>
