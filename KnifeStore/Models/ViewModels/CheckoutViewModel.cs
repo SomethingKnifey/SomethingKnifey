@@ -15,6 +15,10 @@ namespace KnifeStore.Models.ViewModels
         public string LastName { get; set; }
 
         [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
         public string StreetAddress { get; set; }
 
         [Required]
@@ -24,7 +28,7 @@ namespace KnifeStore.Models.ViewModels
         public State State { get; set; }
 
         [Required]
-        public int ZipCode { get; set; }
+        public string ZipCode { get; set; }
     }
 
     public enum State

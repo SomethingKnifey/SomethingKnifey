@@ -31,10 +31,10 @@ namespace KnifeStore
             services.AddMvc();
 
 			services.AddDbContext<KnifeDbContext>(options => 
-			options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+			options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:DefaultIdentityConnection"]));
+            options.UseSqlServer(Configuration["ConnectionStrings:ProductionIdentityConnection"]));
             
             services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<ApplicationDbContext>()
@@ -46,14 +46,16 @@ namespace KnifeStore
 			});
 
             //services.AddAuthentication()
-            //    .AddMicrosoftAccount(microsoftOptions =>{
-            //    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
-            //    microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
-            //     })
-            //    .AddGoogle(googleOptions =>{
-            //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-            //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            //     });
+            //    .AddMicrosoftAccount(microsoftOptions =>
+            //    {
+            //        microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
+            //        microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
+            //    })
+            //    .AddGoogle(googleOptions =>
+            //    {
+            //        googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+            //        googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            //    });
 
             services.AddScoped<IInventory, InventoryActionModel>();
            

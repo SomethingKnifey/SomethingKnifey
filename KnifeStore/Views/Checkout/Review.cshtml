@@ -1,9 +1,44 @@
-﻿@{ 
+﻿@using KnifeStore.Models.ViewModels
+@model KnifeStore.Models.ViewModels.CheckoutViewModel
+
+@{ 
     Layout = "_Layout";
 }
 
-<form asp-action="">
+<form asp-action="Review" method="post">
 
+    <div>
+        <label asp-for="FirstName">First Name: </label>
+        <input asp-for="FirstName" type="text" value="@Model.FirstName" required />
+    </div>
 
+    <div>
+        <label asp-for="LastName">Last Name: </label>
+        <input asp-for="LastName" type="text" value="@Model.LastName" required />
+    </div>
+
+    <div>
+        <label asp-for="StreetAddress">Street Address: </label>
+        <input asp-for="StreetAddress" type="text" placeholder="Street Address" required />
+    </div>
+
+    <div>
+        <label asp-for="City">City: </label>
+        <input asp-for="City" type="text" placeholder="City" required />
+    </div>
+
+    <div>
+        <label asp-for="State">State: </label>
+        @Html.DropDownListFor(model => model.State, new SelectList(Enum.GetValues(typeof(State))), "select one")
+    </div>
+
+    <div>
+        <label asp-for="ZipCode">Zip Code: </label>
+        <input asp-for="ZipCode" type="text" placeholder="Zip Code" maxlength="5" required />
+    </div>
+
+    <div>
+        <button type="submit">Complete Checkout</button>
+    </div>
 
 </form>

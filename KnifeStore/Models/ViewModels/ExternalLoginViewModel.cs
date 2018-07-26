@@ -8,8 +8,8 @@ namespace KnifeStore.Models.ViewModels
 {
     public class ExternalLoginViewModel
     {
-        [EmailAddress]
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
