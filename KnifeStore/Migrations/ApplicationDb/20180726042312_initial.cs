@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace KnifeStore.Migrations
+namespace KnifeStore.Migrations.ApplicationDb
 {
     public partial class initial : Migration
     {

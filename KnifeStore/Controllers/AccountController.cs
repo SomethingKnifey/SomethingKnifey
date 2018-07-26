@@ -210,11 +210,11 @@ namespace KnifeStore.Controllers
             string[] fullname = name.Split(" ");
 
             //this takes the provided information and checks to see if the user exists. If the user exists, they are logged in and returned to home index. If the user does not exist they are taken to the registration confirmation page to answer the claim question about military or law enforcement.
-            try
-            {
-
+            
                 ApplicationUser thisUser = await _userManager.FindByEmailAsync(email);
 
+            if (thisUser != null)
+            {
                 await _signInManager.SignInAsync(thisUser, false);
 
                 if (await _userManager.IsInRoleAsync(thisUser, ApplicationUserRoles.Admin))
@@ -222,18 +222,12 @@ namespace KnifeStore.Controllers
                     return RedirectToAction("Index", "Admin");
                 }
 
-                if(await _userManager.IsInRoleAsync(thisUser, ApplicationUserRoles.Member))
+                if (await _userManager.IsInRoleAsync(thisUser, ApplicationUserRoles.Member))
                 {
                     return RedirectToAction("Index", "Home");
                 }
 
             }
-            catch(Exception)
-            {
-                TempData["ErrorMessage"] = "Something went wrong";
-                return RedirectToAction(nameof(Login));
-            }
-
             //returns user to registration view if they do not currently exist
             return View("ExternalLogin", new ExternalLoginViewModel {
                 Email = email,
