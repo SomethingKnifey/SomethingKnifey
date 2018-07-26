@@ -44,23 +44,23 @@ namespace KnifeStore.Controllers
         [HttpGet]
         public async Task<IActionResult> MyCart()
         {
-            if (User.Identity.Name != null)
+            if (User.Identity.Name == null)
             {
-                List<Knife> knivesInBasket = new List<Knife>();
-
-                foreach (var basket in _appContext.Baskets)
-                {
-                    if (basket.Username == User.Identity.Name)
-                    {
-                        var knife = await _knifeContext.Knives.FirstOrDefaultAsync(k => basket.KnifeModel == k.Model);
-                        knivesInBasket.Add(knife);
-                    }
-                }
-
-                return View(knivesInBasket);
+                return View();
             }
 
-            return View();
+            List<Knife> knivesInBasket = new List<Knife>();
+
+            foreach (var basket in _appContext.Baskets)
+            {
+                if (basket.Username == User.Identity.Name)
+                {
+                    var knife = await _knifeContext.Knives.FirstOrDefaultAsync(k => basket.KnifeModel == k.Model);
+                    knivesInBasket.Add(knife);
+                }
+            }
+
+            return View(knivesInBasket);            
         }
 
         [HttpGet]

@@ -183,7 +183,7 @@ namespace KnifeStore.Controllers
         public async Task<IActionResult> ExternalLoginCallback(string remoteError = null)
         {
             //this immediately catches an error from the returned challenge and redirects back to login page.
-            if(remoteError != null)
+            if (remoteError != null)
             {
                 TempData["ErrorMessage"] = "Something went wrong";
                 return RedirectToAction(nameof(Login));
@@ -191,7 +191,7 @@ namespace KnifeStore.Controllers
 
             var info = await _signInManager.GetExternalLoginInfoAsync();
 
-            if(info == null)
+            if (info == null)
             {
                 return RedirectToAction(nameof(Login));
             }
@@ -210,8 +210,7 @@ namespace KnifeStore.Controllers
             string[] fullname = name.Split(" ");
 
             //this takes the provided information and checks to see if the user exists. If the user exists, they are logged in and returned to home index. If the user does not exist they are taken to the registration confirmation page to answer the claim question about military or law enforcement.
-            
-                ApplicationUser thisUser = await _userManager.FindByEmailAsync(email);
+            ApplicationUser thisUser = await _userManager.FindByEmailAsync(email);
 
             if (thisUser != null)
             {
@@ -226,14 +225,16 @@ namespace KnifeStore.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-
             }
+
             //returns user to registration view if they do not currently exist
-            return View("ExternalLogin", new ExternalLoginViewModel {
-                Email = email,
-                FirstName = fullname[0],
-                LastName = fullname[1]
-            });
+            return View("ExternalLogin", 
+                new ExternalLoginViewModel
+                {
+                    Email = email,
+                    FirstName = fullname[0],
+                    LastName = fullname[1]
+                });
         }
 
         /// <summary>
@@ -247,8 +248,8 @@ namespace KnifeStore.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var info = await _signInManager.GetExternalLoginInfoAsync();
+
                 if (info == null)
                 {
                     TempData["Error"] = "Error loading information.";
@@ -263,8 +264,7 @@ namespace KnifeStore.Controllers
                     FirstName = elvm.FirstName,
                     LastName = elvm.LastName,
                     UserName = elvm.Email,
-                    Email = elvm.Email,
-                    
+                    Email = elvm.Email                    
                 };
 
                 //creates new user
@@ -304,7 +304,6 @@ namespace KnifeStore.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-
             }
 
             return View(elvm);
@@ -326,8 +325,5 @@ namespace KnifeStore.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-
-
     }
 }
