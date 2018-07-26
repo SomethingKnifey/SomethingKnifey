@@ -10,6 +10,11 @@
             <img class="mx-auto d-block" src="~/Assets/knives.jpeg" /><br />
             <a asp-action="ViewAllProducts" asp-controller="UserShop">Browse</a>
 
+            @if (User.Identity.Name != null)
+            {
+                <a asp-action="MyCart" asp-controller="Cart">View your Cart</a>
+            }
+
             <h3 style="font-family: 'Pacifico', cursive">Don't have an account yet? Register <a href="~/account/register">here</a>.</h3>
 
         </div>

@@ -58,12 +58,10 @@ namespace KnifeStore.Controllers
                    (User.Identity.Name != null && User.Claims.First(c => c.Type == "MilitaryOrLE").Value == "True"))
                 {
                     return View(chosenBlade);
-                }
-
-                return RedirectToAction("ViewAllProducts", "UserShop");                
+                }           
             }
 
-            return RedirectToAction("Index" , "Home");
-		}
+            return RedirectToAction("ViewAllProducts", "UserShop");
+        }
     }
 }
