@@ -18,6 +18,12 @@
     </div>
 
     <div>
+        <label asp-for="EmailAddress">Email Address: </label>
+        <input asp-for="EmailAddress" type="email" value="@Model.EmailAddress" required />
+        <p style="display: inline">* for confirmation email</p>
+    </div>
+
+    <div>
         <label asp-for="StreetAddress">Street Address: </label>
         <input asp-for="StreetAddress" type="text" placeholder="Street Address" required />
     </div>
@@ -29,7 +35,7 @@
 
     <div>
         <label asp-for="State">State: </label>
-        @Html.DropDownListFor(model => model.State, new SelectList(Enum.GetValues(typeof(State))), "select one")
+        @Html.DropDownListFor(model => model.State, new SelectList(Enum.GetValues(typeof(State))), "- select one -")
     </div>
 
     <div>
