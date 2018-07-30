@@ -21,7 +21,7 @@ namespace KnifeStore.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddToCart(int? id)
+        public async Task<RedirectToActionResult> AddToCart(int? id)
         {
             if (id.HasValue && User.Identity.Name != null)
             {
