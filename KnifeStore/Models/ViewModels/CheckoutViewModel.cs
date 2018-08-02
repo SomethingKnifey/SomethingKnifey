@@ -16,7 +16,7 @@ namespace KnifeStore.Models.ViewModels
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string EmailAddress { get; set; }
 
         [Required]
         public string StreetAddress { get; set; }
@@ -28,11 +28,12 @@ namespace KnifeStore.Models.ViewModels
         public State State { get; set; }
 
         [Required]
+        [StringLength(5, ErrorMessage = "Please only enter 5 digit Zip Codes")]
         public string ZipCode { get; set; }
     }
 
     public enum State
-    {    
+    {
         Alabama,
         Alaska,
         Arizona,

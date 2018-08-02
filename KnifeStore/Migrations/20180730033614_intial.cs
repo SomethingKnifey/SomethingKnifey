@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace KnifeStore.Migrations.ApplicationDb
+namespace KnifeStore.Migrations
 {
-    public partial class initial : Migration
+    public partial class intial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,6 +62,24 @@ namespace KnifeStore.Migrations.ApplicationDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Baskets", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Username = table.Column<string>(nullable: true),
+                    EmailAddress = table.Column<string>(nullable: true),
+                    StreetAddress = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,6 +247,9 @@ namespace KnifeStore.Migrations.ApplicationDb
 
             migrationBuilder.DropTable(
                 name: "Baskets");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

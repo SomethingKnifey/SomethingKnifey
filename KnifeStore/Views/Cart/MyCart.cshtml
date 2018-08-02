@@ -6,25 +6,28 @@
 
 <h2>Items in Basket: @Model.Count</h2>
 
-<p class="text-center"><a asp-action="Review" asp-controller="Checkout" class="btn btn-default" style="background-color: lightblue">Checkout</a></p>
+<p class="text-center"><a asp-action="ViewAllProducts" asp-controller="UserShop" class="btn btn-default" style="background-color: lightblue">Continue Shopping</a></p>
+
+@if (Model.Count > 0)
+{
+    <p class="text-center"><a asp-action="Review" asp-controller="Checkout" class="btn btn-default" style="background-color: lightblue">Checkout</a></p>
+}
 
 @foreach (var item in Model)
 {
     var knifeToDelete = new Dictionary<string, string>
-    {
-        { "knifeModel", item.Model }
-    };
+{
+{ "knifeModel", item.Model }
+};
 
-    <div class="col" style="position: relative; text-align: center">
-        <h2>@item.Model</h2>
+<div class="col" style="position: relative; text-align: center">
+    <h2>@item.Model</h2>
 
-        <img src="@item.Image" />
+    <img src="@item.Image" />
 
-        <p>Style: @item.Style</p>
+    <p>Style: @item.Style</p>
 
-        <p><a asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@item.ID">View Details</a></p>
-        <p><a asp-controller="Cart" asp-action="RemoveFromCart" asp-all-route-data="knifeToDelete">Remove From Cart</a></p>
-    </div>
+    <p><a asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@item.ID">View Details</a></p>
+    <p><a asp-controller="Cart" asp-action="RemoveFromCart" asp-all-route-data="knifeToDelete">Remove From Cart</a></p>
+</div>
 }
-
-<p class="text-center"><a asp-action="Review" asp-controller="Checkout" class="btn btn-default" style="background-color: lightblue">Checkout</a></p>
