@@ -59,58 +59,61 @@ namespace KnifeStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                //if model is valid, instantiate new claim list
-                List<Claim> claims = new List<Claim>();
+                return View();
+            }
+
+            //if model is valid, instantiate new claim list
+            List<Claim> claims = new List<Claim>();
                 
-                //instantiate new user with info from form
-                ApplicationUser user = new ApplicationUser
+            //instantiate new user with info from form
+            ApplicationUser user = new ApplicationUser
+            {
+                FirstName = rvm.FirstName,
+                LastName = rvm.LastName,
+                UserName = rvm.Email,
+                Email = rvm.Email,
+                IsMilitaryOrLE = rvm.IsMilitaryOrLE,
+            };
+
+            //creates new user
+            var result = await _userManager.CreateAsync(user, rvm.Password);
+
+            //if creation succeeds
+            if (result.Succeeded)
+            {
+                //add new Claims
+                string fullName = $"{user.FirstName} {user.LastName}";                    
+                Claim nameClaim = new Claim("FullName", fullName, ClaimValueTypes.String);
+                Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+                Claim milOrLEClaim = new Claim("MilitaryOrLE", user.IsMilitaryOrLE.ToString(), ClaimValueTypes.Boolean);
+
+                claims.Add(nameClaim);
+                claims.Add(emailClaim);
+                claims.Add(milOrLEClaim);
+
+                //adds claims to user, adds user to database
+                await _userManager.AddClaimsAsync(user, claims);
+
+                await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Member);
+
+                if (user.Email == "rick@rickandmorty.com")
                 {
-                    FirstName = rvm.FirstName,
-                    LastName = rvm.LastName,
-                    UserName = rvm.Email,
-                    Email = rvm.Email,
-                    IsMilitaryOrLE = rvm.IsMilitaryOrLE,
-                };
-
-                //creates new user
-                var result = await _userManager.CreateAsync(user, rvm.Password);
-
-                //if creation succeeds
-                if (result.Succeeded)
-                {
-                    //add new Claims
-                    string fullName = $"{user.FirstName} {user.LastName}";                    
-                    Claim nameClaim = new Claim("FullName", fullName, ClaimValueTypes.String);
-                    Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
-                    Claim milOrLEClaim = new Claim("MilitaryOrLE", user.IsMilitaryOrLE.ToString(), ClaimValueTypes.Boolean);
-
-                    claims.Add(nameClaim);
-                    claims.Add(emailClaim);
-                    claims.Add(milOrLEClaim);
-
-                    //adds claims to user, adds user to database
-                    await _userManager.AddClaimsAsync(user, claims);
-
-                    await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Member);
-
-                    if (user.Email == "rick@rickandmorty.com")
-                    {
-                        await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
-                    }
-                    
-                    await _context.SaveChangesAsync();
-                    
-                    await _signInManager.SignInAsync(user, false);
-
-                    if (await _userManager.IsInRoleAsync(user, ApplicationUserRoles.Admin))
-                    {
-                        return RedirectToAction("Index", "Admin");
-                    }
-
-                    return RedirectToAction("Index", "Home");
+                    await _userManager.AddToRoleAsync(user, ApplicationUserRoles.Admin);
                 }
+                    
+                await _context.SaveChangesAsync();                    
+                await _signInManager.SignInAsync(user, false);
+
+
+
+                if (await _userManager.IsInRoleAsync(user, ApplicationUserRoles.Admin))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+
+                return RedirectToAction("Index", "Home");
             }
 
             return View();

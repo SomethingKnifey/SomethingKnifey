@@ -69,7 +69,12 @@ namespace KnifeStore.Controllers
                 ZipCode = zip
             };
 
+            var customerBaskets = from baskets in _appContext.Baskets
+                              where baskets.Username == User.Identity.Name
+                              select baskets;
+                        
             await _appContext.Orders.AddAsync(customerOrder);
+            _appContext.Baskets.RemoveRange(customerBaskets);
             await _appContext.SaveChangesAsync();
 
             return RedirectToAction("Index", "Home");
