@@ -32,7 +32,7 @@ The user then has the options to browse the site products, register for the site
 
 A new user can register for the site. To do so, they click the registration link, and are taken to the form as shown below:
 
-![Site screenshot 2](Register.jpg)
+![Site screenshot 2](/KnifeStore/Assets/Register.jpg)
 
 Once all the form information has been filled out, the user is created and saved in the database, then returned to the home screen to shop.
 
@@ -40,7 +40,7 @@ Once all the form information has been filled out, the user is created and saved
 
 Only existing users are able to login. Once a user is logged in, they must manually choose to logout, or will be allowed to skip subsequent logins, via their user info being retreived each time they access the site. If they log out after their initial registration and choose to log back in, they are taken to the form shown below:
 
-![Site screenshot 3](Login.jpg)
+![Site screenshot 3](/KnifeStore/Assets/Login.jpg)
 
 An email claim is established when the user registers, and that information serves as the username on login. For many people it is easier to remember which email they signed into a site with, rather than remembering which username they established for a particular site. The password is the password they used on user creation.
 
@@ -48,7 +48,7 @@ An email claim is established when the user registers, and that information serv
 
 Once a user is logged in, they are able to browse the list of products and shop. If a user is not logged in, they will not be presented with the option of adding items to a shopping cart, but can still browse the inventory. The one exception to this are products that are labeled as military or law enforcement only, through a claims-based restriction policy. A user who is not logged in, or is not military or law enforcement cannot view the details or add restricted items to their cart. An example of the shopping list is shown below:
 
-![Site screenshot 4](Browse.jpg)
+![Site screenshot 4](/KnifeStore/Assets/Browse.jpg)
 
 ## Licensing
 This program is used with a MIT license.
