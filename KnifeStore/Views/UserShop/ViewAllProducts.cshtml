@@ -1,9 +1,11 @@
 ﻿@model List<KnifeStore.Models.Knife>
 
 @{
-	Layout = "_Layout";
+    Layout = "_Layout";
+    int itemCount = 0;
 }
 
+<<<<<<< HEAD
 <div class="container bg-info">
     <div class="row">
         @foreach (var item in Model)
@@ -25,3 +27,42 @@
         }
     </div>
 </div>
+=======
+@if (User.Identity.Name != null)
+{
+    <p class="text-center"><a asp-action="MyCart" asp-controller="Cart" class="btn btn-default" style="background-color: lightblue">View Cart</a></p>
+}
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    itemCount = 0;
+
+    <div class="row" style="margin: 30px auto">
+
+        @while (itemCount < 2 && i < Model.Count)
+        {
+
+            <div class="col-md-6" style="position: relative; text-align: center">
+                <h2>@Model[i].Model</h2>
+
+                <img src="@Model[i].Image" />
+
+                <p>Style: @Model[i].Style</p>
+
+                @if (Model[i].Style.ToString() == "Tactical")
+                {
+                    <p style="position: absolute; top: 0; right: 0; padding: 25px 5px; border-radius: 50%; background-color: red; color: white">Only available to<br>Law Enforcement or Military personnel</p>
+                }
+
+                <p><a asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@Model[i].ID">View Details</a></p>
+                <p><a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model[i].ID">Add To Cart</a></p>
+            </div>
+
+            i++;
+            itemCount++;
+
+        }
+
+    </div>
+}
+>>>>>>> fad33aebcdcaa99c4e99e2faaf4ed4ac94f181e4

@@ -35,7 +35,11 @@ namespace KnifeStore
 
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration["ConnectionStrings:ProductionIdentityConnection"]));
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> fad33aebcdcaa99c4e99e2faaf4ed4ac94f181e4
             services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<ApplicationDbContext>()
 					.AddDefaultTokenProviders();
@@ -45,8 +49,20 @@ namespace KnifeStore
 				options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationUserRoles.Admin));
 			});
 
-			services.AddScoped<IInventory, InventoryActionModel>();
-            //services.AddSingleton<IAuthorizationHandler, AdminHandler>;
+            services.AddAuthentication()
+                .AddMicrosoftAccount(microsoftOptions =>
+               {
+                    microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ClientId"];
+                   microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:ClientSecret"];
+               })
+              .AddGoogle(googleOptions =>
+                {
+                   googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                   googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+               });
+
+            services.AddScoped<IInventory, InventoryActionModel>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

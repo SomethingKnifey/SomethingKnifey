@@ -1,0 +1,36 @@
+﻿@model  KnifeStore.Models.ViewModels.ExternalLoginViewModel
+
+@{ 
+    Layout = "_Layout";
+    ViewData["Title"] = "ExternalLogin";
+}
+
+<h2>ExternalLogin</h2>
+
+<form asp-action="ExternalLoginConfirmation" asp-controller="Account">
+
+    <div>
+        <label asp-for="FirstName">First Name:</label>
+        <input asp-for="FirstName" type="text" placeholder="enter your first name" />
+    </div>
+
+    <div>
+        <label asp-for="LastName">Last Name:</label>
+        <input asp-for="LastName" type="text" placeholder="enter your last name" />
+    </div>
+
+    <div>
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" type="email" placeholder="example@somethingknifey.com" />
+    </div>
+
+    <div>
+        <label asp-for="IsMilitaryOrLE">Are you currently in law enforcement or the military?</label>
+        <input asp-for="IsMilitaryOrLE" type="checkbox" />
+    </div>
+
+    <div>
+        <button type="submit" formmethod="post">Complete Registration</button>
+    </div>
+
+</form>

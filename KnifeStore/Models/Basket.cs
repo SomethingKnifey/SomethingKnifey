@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace KnifeStore.Models
 {
     public class Basket
     {
         public int ID { get; set; }
-        public List<Knife> Items { get; set; }
+        public string Username { get; set; }
+        public string KnifeModel { get; set; }
     }
 }

@@ -24,19 +24,22 @@
 <body>
     <nav class="navbar navbar-5 navbar-expand-lg navbar-light bg-light">
         <div class="container fluid">
+
             <h1 style="font-family: 'Pacifico', cursive"><strong><a href="~/" style="color: black; text-decoration: none">Something Knifey</a></strong></h1>
+            
             @if (SignInManager.IsSignedIn(User))
             {
                 try
                 {
-                <p>Welcome! @User.Claims.First(n => n.Type == "FullName").Value!</p>
-                } catch(Exception)
+                    <p>Welcome! @User.Claims.First(n => n.Type == "FullName").Value!</p>
+                }
+                catch
                 {
-                    <p></p>
-
                 }
             }
+
             <ul>
+
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <li class="btn"><a href="~/account/logout">Logout</a></li>
@@ -45,14 +48,18 @@
                 {
                     <li class="btn"><a href="~/account/login">Login</a></li>
                 }
-                <li class="btn"><a href="~/account/register">Register</a></li>
-                @if (User.IsInRole("Admin")){
 
-                <li class="btn"><a asp-action="Index" asp-controller="Admin">Admin</a></li>
+                <li class="btn"><a href="~/account/register">Register</a></li>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="btn"><a asp-action="Index" asp-controller="Admin">Admin</a></li>
                 }
 
                 <li class="btn"><a href="https://en.wikipedia.org/wiki/Godzilla">About Us</a></li>
+
             </ul>
+
         </div>
     </nav>
     <div style="background-color: lightgray;">

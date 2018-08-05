@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using KnifeStore.Data;
 using KnifeStore.Models;
 using KnifeStore.Models.Interfaces;
@@ -65,7 +62,7 @@ namespace KnifeStore.Controllers
                 Price = knife.Price
             };
 
-            _context.Knives.Add(knife);
+            await _context.Knives.AddAsync(knife);
 			await _context.SaveChangesAsync();
 
 			return RedirectToAction("GetKnives", "Admin");
@@ -78,14 +75,14 @@ namespace KnifeStore.Controllers
         /// <returns>admin to list view</returns>
 		public async Task<IActionResult> DeleteKnife(int? id)
 		{
-			var deleteThis = await _context.Knives.FirstOrDefaultAsync(x => x.ID == id);
+			var knife = await _context.Knives.FirstOrDefaultAsync(x => x.ID == id);
 
-			if (deleteThis == null)
+			if (knife == null)
 			{
 				return NotFound();
 			}
 
-			_context.Knives.Remove(deleteThis);
+			_context.Knives.Remove(knife);
 			await _context.SaveChangesAsync();
 
 			return RedirectToAction("GetKnives", "Admin");

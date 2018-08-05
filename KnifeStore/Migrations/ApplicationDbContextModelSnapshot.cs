@@ -4,16 +4,14 @@ using KnifeStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace KnifeStore.Migrations.ApplicationDb
+namespace KnifeStore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180716030359_updateUsers")]
-    partial class updateUsers
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +35,8 @@ namespace KnifeStore.Migrations.ApplicationDb
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName");
+
+                    b.Property<bool>("IsMilitaryOrLE");
 
                     b.Property<string>("LastName");
 
@@ -74,6 +74,48 @@ namespace KnifeStore.Migrations.ApplicationDb
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("KnifeStore.Models.Basket", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("KnifeModel");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Baskets");
+                });
+
+            modelBuilder.Entity("KnifeStore.Models.Order", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("EmailAddress");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("State");
+
+                    b.Property<string>("StreetAddress");
+
+                    b.Property<string>("Username");
+
+                    b.Property<int>("ZipCode");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
