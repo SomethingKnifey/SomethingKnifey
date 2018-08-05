@@ -50,5 +50,6 @@ Once a user is logged in, they are able to browse the list of products and shop.
 
 ![Site screenshot 4](Browse.jpg)
 
+
 ## Licensing
 This program is used with a MIT license.
