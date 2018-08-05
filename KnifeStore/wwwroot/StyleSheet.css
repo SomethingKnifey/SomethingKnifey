@@ -1,4 +1,7 @@
-﻿body img{
-	max-height: 20%;
-	max-width: 20%;
+﻿body{
+    background-color: gray;
+}
+
+.col-md-6{
+    background-color:gray;
 }
