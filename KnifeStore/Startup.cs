@@ -31,11 +31,11 @@ namespace KnifeStore
             services.AddMvc();
 
 			services.AddDbContext<KnifeDbContext>(options => 
-			options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
+			options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:ProductionIdentityConnection"]));
-            
+            options.UseSqlServer(Configuration["ConnectionStrings:DefaultIdentityConnection"]));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
 					.AddEntityFrameworkStores<ApplicationDbContext>()
 					.AddDefaultTokenProviders();
