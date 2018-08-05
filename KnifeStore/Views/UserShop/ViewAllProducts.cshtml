@@ -2,35 +2,45 @@
 
 @{
     Layout = "_Layout";
-   
+    int itemCount = 0;
+
 }
 
-
-<div class="container bg-info">
-    <div class="row">
-        @foreach (var item in Model)
-        {
-        <div class="col-md-6 border border-dark">
-            <h2>Model: @item.Model</h2>
-
-            <img src="@item.Image" class="img-thumbnail" />
-
-            <p>Style: @item.Style</p>
-
-            @if (item.Style.ToString() == "Tactical")
-            {
-                <p style="background-color: red; color: white">Only available to Law Enforcement or Military personnel</p>
-            }
-
-            <p><a style="color: black;" asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@item.ID">View Details</a></p>
-            <p><a style="color: black;" asp-controller="Cart" asp-action="AddToCart" asp-route-id="@item.ID">Add To Cart</a></p>
-        </div>
-        }
-    </div>
-</div>
 
 @if (User.Identity.Name != null)
 {
     <p class="text-center"><a asp-action="MyCart" asp-controller="Cart" class="btn btn-default" style="background-color: lightblue; color: black">View Cart</a></p>
 }
 
+@for (int i = 0; i < Model.Count; i++)
+{
+    itemCount = 0;
+
+    <div class="container"; position: relative">
+
+        @while (itemCount < 2 && i < Model.Count)
+        {
+
+            <div class="col-md-12" style="text-align: center">
+                <h2>@Model[i].Model</h2>
+
+                <img src="@Model[i].Image" class="thumbnail" />
+
+                <p>Style: @Model[i].Style</p>
+
+                @if (Model[i].Style.ToString() == "Tactical")
+                {
+                    <p style="background-color: red; color: white; display: inline-block; border-radius: 3%">Only available to<br>Law Enforcement or Military personnel</p>
+                }
+
+                <p><a asp-controller="UserShop" asp-action="ViewDetails" asp-route-id="@Model[i].ID">View Details</a></p>
+                <p><a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@Model[i].ID">Add To Cart</a></p>
+            </div>
+
+            i++;
+            itemCount++;
+
+        }
+
+    </div>
+}
