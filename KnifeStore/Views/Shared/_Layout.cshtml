@@ -49,7 +49,9 @@
                     <li class="btn"><a href="~/account/login">Login</a></li>
                 }
 
+                @if(User.Identity.Name == null) { 
                 <li class="btn"><a href="~/account/register">Register</a></li>
+                }
 
                 @if (User.IsInRole("Admin"))
                 {
