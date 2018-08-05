@@ -24,7 +24,7 @@ Once on the site, the user can click on the hyperlinks to register a new account
 
 The first screen the user is welcomed to is the landing page, as shown below:
 
-![Site screenshot](KnifeStore/Assets/LandingScreen.jpg)
+![Site screenshot](./KnifeStore/Assets/LandingScreen.jpg)
 
 The user then has the options to browse the site products, register for the site, or login if they are currently registered. If the user is an Admin, they are redirected to the Admin portal where they can perform CRUD operations on the products list.
 
