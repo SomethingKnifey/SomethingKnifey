@@ -66,7 +66,7 @@ This site uses both Microsoft and Google 3rd party authentication and login serv
 
 ## DB Schema
 
-![DataBase Schema](/KnifeStore/Assets/DbSchema.jpg)
+![DataBase Schema](/KnifeStore/Assets/DBSchema.jpg)
 
 The database schema contains two separate databases. The knife product database is separate as indicated in the visual. The basket and order tables are a subset of the Identity database. This allows us to link the individual user to a basket and order. The basket table is simply a table of each individual shopping entry. In order to find an individual users basket items, the user table is simply parsed for all the entries containing the user ID and and the knife model type.
 
