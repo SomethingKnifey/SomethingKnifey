@@ -26,7 +26,7 @@
         <div class="container fluid">
 
             <h1 style="font-family: 'Pacifico', cursive"><strong><a href="~/" style="color: black; text-decoration: none">Something Knifey</a></strong></h1>
-            
+
             @if (SignInManager.IsSignedIn(User))
             {
                 try
@@ -49,8 +49,9 @@
                     <li class="btn"><a href="~/account/login">Login</a></li>
                 }
 
-                @if(User.Identity.Name == null) { 
-                <li class="btn"><a href="~/account/register">Register</a></li>
+                @if (User.Identity.Name == null)
+                {
+                    <li class="btn"><a href="~/account/register">Register</a></li>
                 }
 
                 @if (User.IsInRole("Admin"))
@@ -64,6 +65,10 @@
 
         </div>
     </nav>
+    <span class="skype-button bubble " data-contact-id="b39e1a26-056a-4ff6-91c4-10c7fce1b231"></span>
+    <script src="https://swc.cdn.skype.com/sdk/v1/sdk.min.js"></script>
+
+    <iframe src='https://webchat.botframework.com/embed/JesseTestBotNoLuis?s=v5E9L2oh4Ug.cwA.hNE.zwjokDmy0WE60oT_ISX5sJsobQV2qtCsisbr-iD95hk'></iframe>
     <div style="background-color: lightgray;">
         @RenderBody()
     </div>
